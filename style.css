@@ -102,6 +102,17 @@ section {
     margin: 0 auto 2rem;
 }
 
+.logo {
+    display: flex; 
+    align-items: center; 
+    gap: 10px; /
+}
+
+.logo-img {
+    height: 40px; 
+    width: auto; 
+}
+
 .btn {
     display: inline-block;
     background-color: var(--white);
