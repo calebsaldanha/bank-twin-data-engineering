@@ -75,40 +75,4 @@ document.addEventListener('DOMContentLoaded', function() {
             });
         }
     });
-
-    // --- Lógica para Artigos (Adicionado via Script) ---
-    const articleCards = document.querySelectorAll('.article-card');
-    const articleDetails = document.querySelectorAll('.article-detail');
-    const closeArticleButtons = document.querySelectorAll('.close-article');
-
-    articleCards.forEach(card => {
-        card.addEventListener('click', function() {
-            const articleId = this.getAttribute('data-article');
-            
-            // Fecha outros abertos
-            articleDetails.forEach(detail => detail.classList.remove('active'));
-            
-            const currentArticle = document.getElementById(articleId);
-            if (currentArticle) {
-                currentArticle.classList.add('active');
-                currentArticle.scrollIntoView({ behavior: 'smooth', block: 'start' });
-            }
-        });
-    });
-
-    closeArticleButtons.forEach(button => {
-        button.addEventListener('click', function() {
-            this.closest('.article-detail').classList.remove('active');
-            document.querySelector('#articles').scrollIntoView({ behavior: 'smooth' });
-        });
-    });
-
-    // Fechar ao clicar fora (Listener Adicional)
-    document.addEventListener('click', function(e) {
-        if (!e.target.closest('.article-detail') && !e.target.closest('.article-card')) {
-            articleDetails.forEach(detail => {
-                detail.classList.remove('active');
-            });
-        }
-    });
 });
