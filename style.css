@@ -645,7 +645,7 @@ footer {
     }
 }
 
-/* --- Seção de Artigos (Adicionado via Script) --- */
+/* --- Seção de Artigos --- */
 .articles {
     background-color: var(--white);
 }
@@ -757,7 +757,7 @@ footer {
     margin-bottom: 0.5rem;
 }
 
-/* Ajustes para o MathJax (Fórmulas) */
+/* Ajustes MathJax */
 mjx-container {
     overflow-x: auto;
     overflow-y: hidden;

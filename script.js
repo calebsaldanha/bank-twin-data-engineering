@@ -76,10 +76,15 @@ document.addEventListener('DOMContentLoaded', function() {
         }
     });
 
-    // --- Lógica para Artigos (Adicionado via Script) ---
+    // --- Lógica para Artigos (Com Fix de MathJax) ---
     const articleCards = document.querySelectorAll('.article-card');
     const articleDetails = document.querySelectorAll('.article-detail');
     const closeArticleButtons = document.querySelectorAll('.close-article');
+
+    // Inicializa o MathJax na carga da página
+    if (window.MathJax) {
+        window.MathJax.typesetPromise().catch((err) => console.log('Erro MathJax Init:', err));
+    }
 
     articleCards.forEach(card => {
         card.addEventListener('click', function() {
@@ -91,6 +96,14 @@ document.addEventListener('DOMContentLoaded', function() {
             const currentArticle = document.getElementById(articleId);
             if (currentArticle) {
                 currentArticle.classList.add('active');
+                
+                // Força o MathJax a renderizar as fórmulas AGORA que o elemento está visível
+                if (window.MathJax) {
+                    window.MathJax.typesetPromise([currentArticle]).then(() => {
+                        console.log('Fórmulas renderizadas com sucesso.');
+                    });
+                }
+
                 currentArticle.scrollIntoView({ behavior: 'smooth', block: 'start' });
             }
         });
@@ -103,7 +116,7 @@ document.addEventListener('DOMContentLoaded', function() {
         });
     });
 
-    // Fechar ao clicar fora (Listener Adicional)
+    // Fechar ao clicar fora
     document.addEventListener('click', function(e) {
         if (!e.target.closest('.article-detail') && !e.target.closest('.article-card')) {
             articleDetails.forEach(detail => {

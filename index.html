@@ -6,9 +6,19 @@
     <title>Caleb Saldanha | Portifólio</title>
     <link rel="icon" type="image/png" href="image12.png">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
-    
-    <script src="https://polyfill.io/v3/polyfill.min.js?features=es6"></script>
-    <script id="MathJax-script" async src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
+    <script>
+    window.MathJax = {
+      tex: {
+        inlineMath: [['$', '$'], ['\\(', '\\)']],
+        displayMath: [['$$', '$$'], ['\\[', '\\]']],
+        processEscapes: true
+      },
+      startup: {
+        typeset: false
+      }
+    };
+    </script>
+    <script id="MathJax-script" async src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-chtml.js"></script>
     <link rel="stylesheet" href="style.css">
 </head>
 <body>
@@ -473,46 +483,74 @@ plt.show()
                     <button class="close-article">&times;</button>
                 </div>
                 <div class="detail-content article-body">
-                    <div class="article-header-info">
-                        <p><strong>Autor:</strong> Caleb Saldanha</p>
-                        <p><strong>Formato:</strong> Estudo Técnico & Reconstrução Teórica</p>
-                        <p><em>Nota: Este artigo apresenta uma análise independente baseada na documentação open-source.</em></p>
+                    
+                    <div class="article-note" style="background: #f8f9fa; padding: 20px; border-left: 4px solid #3a6ea5; margin-bottom: 30px; border-radius: 4px;">
+                        <p style="margin-bottom: 10px; color: #2c3e50;"><strong>Nota Técnica e Contextualização:</strong></p>
+                        <p style="font-style: italic; font-size: 0.95rem; color: #555;">
+                            Este artigo apresenta uma <strong>análise independente e uma reconstrução teórica</strong> da arquitetura matemática do framework "Meridian", baseada exclusivamente na documentação técnica de código aberto (Open Source) e em papers acadêmicos publicados pela equipe de pesquisa do Google.
+                        </p>
+                        <p style="font-style: italic; font-size: 0.95rem; color: #555; margin-bottom: 0;">
+                            O objetivo deste estudo é demonstrar a aplicação prática de conceitos avançados de estatística Bayesiana e modelagem hierárquica na resolução de problemas modernos de mensuração de marketing. O autor não possui vínculo com o desenvolvimento proprietário da ferramenta, servindo este texto como material educativo e de análise de engenharia reversa conceitual.
+                        </p>
                     </div>
-                    <hr>
 
                     <h4>Resumo</h4>
-                    <p>Este artigo apresenta a estrutura teórica e matemática do Meridian, o framework de Marketing Mix Modeling (MMM) desenvolvido pelo Google. Em contraste com modelos determinísticos ou baseados em cookies, o Meridian utiliza regressão Bayesiana Hierárquica em nível geográfico para inferir causalidade em dados agregados.</p>
+                    <p>Este artigo apresenta a estrutura teórica e matemática do Meridian, o <em>framework</em> de Marketing Mix Modeling (MMM) desenvolvido pelo Google. Em contraste com modelos determinísticos ou baseados em cookies, o Meridian utiliza regressão Bayesiana Hierárquica em nível geográfico para inferir causalidade em dados agregados. O modelo incorpora funções de transformação de mídia (Adstock Geométrico e Saturação Hill), priors informativos para calibração via experimentos de incrementalidade e quantificação de incerteza através de amostragem MCMC (<em>Markov Chain Monte Carlo</em>). Discutimos as equações fundamentais, a parametrização dos efeitos de mídia e a otimização orçamentária sob retornos decrescentes.</p>
 
                     <h4>1. Introdução</h4>
-                    <p>Com a depreciação de identificadores de terceiros e o aumento das restrições de privacidade (GDPR, ATT), a atribuição granular (MTA) perde precisão. O Marketing Mix Modeling (MMM) ressurge como a metodologia padrão para mensuração de eficácia de mídia.</p>
-                    <p>O Modelo Meridian inova ao propor uma arquitetura que resolve as limitações clássicas do MMM através de dois pilares: <strong>Modelagem Geo-Level</strong> e <strong>Inferência Bayesiana</strong>.</p>
+                    <p>Com a depreciação de identificadores de terceiros e o aumento das restrições de privacidade (GDPR, ATT), a atribuição granular (MTA) perde precisão. O Marketing Mix Modeling (MMM) ressurge como a metodologia padrão para mensuração de eficácia de mídia, pois utiliza dados agregados e não requer rastreamento individual.</p>
+                    <p>O <strong>Modelo Meridian</strong> inova ao propor uma arquitetura que resolve as limitações clássicas do MMM (colinearidade, falta de causalidade) através de dois pilares:</p>
+                    <ul>
+                        <li><strong>Modelagem Geo-Level:</strong> Uso de dados seccionados por geografia (ex: Estados, DMAs) para aumentar o tamanho da amostra e variância do sinal.</li>
+                        <li><strong>Inferência Bayesiana:</strong> Incorporação de conhecimento prévio (Priors) derivados de experimentos de incrementalidade para restringir o espaço de soluções.</li>
+                    </ul>
 
                     <h4>2. Especificação do Modelo</h4>
-                    <p>O Meridian é formulado como um modelo de regressão aditiva. Seja \(Y_{g,t}\) o KPI de interesse na geografia \(g\) e tempo \(t\). O modelo é definido como:</p>
+                    <p>O Meridian é formulado como um modelo de regressão aditiva, onde a variável resposta (KPI) é decomposta em tendência, sazonalidade, efeitos de mídia e variáveis de controle.</p>
+
+                    <h5>2.1 Equação Geral do Modelo</h5>
+                    <p>Seja $Y_{g,t}$ o KPI de interesse (vendas, conversões) na geografia $g$ e tempo $t$. O modelo é definido como:</p>
                     
                     $$Y_{g,t} = \underbrace{\tau_{g,t}}_{\text{Tendência}} + \underbrace{\sum_{m=1}^{M} \beta_{g,m} \cdot f_m(x_{g,t,m})}_{\text{Efeitos de Mídia}} + \underbrace{\sum_{c=1}^{C} \gamma_{g,c} \cdot z_{g,t,c}}_{\text{Variáveis de Controle}} + \epsilon_{g,t}$$
 
                     <p>Onde:</p>
                     <ul>
-                        <li>\(\tau_{g,t}\): Componente de tendência e sazonalidade.</li>
-                        <li>\(x_{g,t,m}\): Execução de mídia bruta do canal \(m\).</li>
-                        <li>\(f_m(\cdot)\): Função de transformação não-linear (Adstock e Saturação).</li>
+                        <li>$\tau_{g,t}$: Componente de tendência e sazonalidade.</li>
+                        <li>$x_{g,t,m}$: Execução de mídia bruta (impressões, gasto) do canal $m$.</li>
+                        <li>$f_m(\cdot)$: Função de transformação não-linear (Adstock e Saturação).</li>
+                        <li>$z_{g,t,c}$: Variáveis de controle (preço, competidores, feriados).</li>
+                        <li>$\epsilon_{g,t}$: Termo de erro, tipicamente $\epsilon_{g,t} \sim \text{Normal}(0, \sigma^2)$.</li>
                     </ul>
 
                     <h4>3. Transformação de Variáveis de Mídia</h4>
                     <p>O Meridian modela a "física" da publicidade: o efeito de um anúncio não é instantâneo nem linear.</p>
 
                     <h5>3.1 Efeito de Defasagem (Adstock)</h5>
-                    <p>Seja \(x_{t}\) o investimento no tempo \(t\), o estoque de mídia acumulado \(A_t\) é:</p>
+                    <p>O conceito de Adstock captura o efeito residual da publicidade ao longo do tempo (memória do consumidor). O Meridian utiliza, primariamente, o <strong>Adstock Geométrico</strong>.</p>
+                    <p>Seja $x_{t}$ o investimento no tempo $t$, o estoque de mídia acumulado $A_t$ é:</p>
                     $$A(x_{t}, \alpha) = x_{t} + \alpha \cdot A(x_{t-1}, \alpha)$$
-                    <p>Onde \(\alpha\) é a taxa de decaimento (entre 0 e 1).</p>
+                    <ul>
+                        <li><strong>$\alpha$ (Taxa de Decaimento):</strong> Parâmetro entre $0$ e $1$. Se $\alpha = 0.8$, 80% do efeito do anúncio persiste na semana seguinte.</li>
+                        <li>No modelo Bayesiano, $\alpha$ é tratado como uma variável aleatória com uma distribuição <em>Beta</em> como prior: $\alpha \sim \text{Beta}(a, b)$.</li>
+                    </ul>
 
                     <h5>3.2 Efeito de Saturação (Hill Function)</h5>
-                    <p>Para modelar os retornos decrescentes, aplica-se a função de Hill:</p>
+                    <p>Para modelar os retornos decrescentes (onde o ROI marginal cai à medida que o investimento aumenta), o Meridian aplica a função de Hill sobre o Adstock transformado.</p>
                     $$Hill(A_t; K, S) = \frac{1}{1 + \left( \frac{K}{A_t} \right)^S}$$
-                    
+                    <p>Onde:</p>
+                    <ul>
+                        <li><strong>$A_t$</strong>: Mídia transformada pelo Adstock.</li>
+                        <li><strong>$S$ (Slope/Forma):</strong> Controla a inclinação da curva em "S". $S > 1$ indica curva em S; $S \leq 1$ indica curva C (côncava).</li>
+                        <li><strong>$K$ (Half-Saturation Point):</strong> O ponto onde a resposta atinge 50% do seu valor máximo.</li>
+                    </ul>
+                    <p>A combinação completa para um canal de mídia $m$ no modelo é:</p>
+                    $$Contribution_m = \mu_m \times Hill(Adstock(x_{m}), K_m, S_m)$$
+
                     <h4>4. Estrutura Bayesiana Hierárquica</h4>
-                    <p>Para um coeficiente de mídia \(\beta_{g,m}\) (eficiência do canal \(m\) na geografia \(g\)), assumimos que ele vem de uma distribuição comum:</p>
+                    <p>A principal vantagem técnica do Meridian é o tratamento hierárquico dos parâmetros. Isso permite que o modelo "aprenda" padrões nacionais enquanto respeita as particularidades regionais (<em>Partial Pooling</em>).</p>
+
+                    <h5>4.1 Hierarquia Geográfica</h5>
+                    <p>Para um coeficiente de mídia $\beta_{g,m}$ (eficiência do canal $m$ na geografia $g$), assumimos que ele vem de uma distribuição comum (população nacional):</p>
                     $$
                     \begin{aligned}
                     \beta_{g,m} &\sim \text{LogNormal}(\mu_m, \sigma_m) \\
@@ -522,28 +560,42 @@ plt.show()
                     $$
                     <p>Isso permite o <em>Partial Pooling</em>, onde geografias menores aprendem com a média nacional.</p>
 
+                    <h5>4.2 Amostragem MCMC</h5>
+                    <p>O Meridian resolve essas equações complexas não analiticamente, mas computacionalmente, usando o amostrador <strong>NUTS (No-U-Turn Sampler)</strong>, um tipo de <em>Hamiltonian Monte Carlo</em>. Isso gera milhares de cenários plausíveis (distribuição posterior) para cada parâmetro, permitindo intervalos de credibilidade.</p>
+
                     <h4>5. Calibração com Experimentos (ROI Priors)</h4>
-                    <p>O Meridian permite injetar resultados de Testes A/B nos Priors do ROI para corrigir correlações espúrias:</p>
+                    <p>Um dos diferenciais críticos do Meridian documentado pelo Google é a capacidade de usar "Ground Truth" para corrigir o modelo. MMMs tradicionais sofrem com correlações espúrias. O Meridian resolve isso injetando resultados de Testes A/B ou Geo-Experiments nos <strong>Priors</strong> do ROI.</p>
+
+                    <h5>5.1 Formulação do Prior de ROI</h5>
+                    <p>Se um experimento de incrementalidade indicou que o canal <em>Search</em> tem um ROI de 4.0 com erro padrão de 0.5, o Meridian permite configurar o Prior do coeficiente $\beta_{Search}$ para refletir isso.</p>
+                    <p>A relação matemática é:</p>
+                    $$ROI_{m} = \frac{\sum \text{Contribuição Marginal}_m}{\sum \text{Custo}_m}$$
+                    <p>O modelo penaliza soluções onde o ROI inferido se desvia significativamente do ROI experimental, equilibrando a verossimilhança dos dados históricos com a evidência experimental.</p>
                     $$P(\theta | Data) \propto P(Data | \theta) \times P_{calibração}(\theta)$$
 
                     <h4>6. Otimização Orçamentária</h4>
-                    <p>O objetivo é encontrar o vetor de investimento \(X^*\) que maximiza a receita sujeito ao orçamento \(B\):</p>
+                    <p>Com a curva de resposta $f_m(x)$ estimada para cada canal, o objetivo final é encontrar o vetor de investimento $X^* = [x_1, \dots, x_M]$ que maximiza a receita total, sujeito a uma restrição orçamentária $B$.</p>
+
+                    <h5>6.1 Problema de Otimização Restrita</h5>
                     $$
                     \begin{aligned}
                     \text{Maximizar } & \sum_{m=1}^{M} Response_m(x_m) \\
-                    \text{Sujeito a } & \sum_{m=1}^{M} x_m \leq B
+                    \text{Sujeito a } & \sum_{m=1}^{M} x_m \leq B \\
+                    & L_m \leq x_m \leq U_m
                     \end{aligned}
                     $$
+                    <p>Onde $L_m$ e $U_m$ são limites inferiores e superiores de gasto para evitar extrapolação da curva de Hill para regiões não observadas. O Meridian resolve isso usando otimizadores de gradiente (como SLSQP) sobre a superfície de resposta média posterior.</p>
 
                     <h4>7. Conclusão</h4>
-                    <p>O Modelo Meridian representa o estado da arte em MMM. A transparência do código open-source permite que cientistas de dados validem e adaptem as premissas matemáticas, garantindo que o modelo reflita a realidade do negócio.</p>
+                    <p>O Modelo Meridian representa o estado da arte em MMM, transicionando da econometria frequentista tradicional para a inferência Bayesiana computacional. Ao modelar explicitamente a hierarquia geográfica e as transformações não-lineares de Adstock/Saturação, e ao permitir a injeção de priors experimentais, o Meridian oferece um caminho robusto para mensuração de causalidade em um ecossistema sem cookies. A transparência do código <em>open-source</em> permite que cientistas de dados validem e adaptem as premissas matemáticas, garantindo que o modelo reflita a realidade do negócio e não seja uma "caixa preta".</p>
                     
                     <div class="article-footer">
-                        <h5>Referências</h5>
+                        <h5>Referências Bibliográficas e Documentação</h5>
                         <ul>
-                            <li>Google (2024). Meridian: A Bayesian Mixed Marketing Modeling (MMM) Framework.</li>
-                            <li>Jin, Y., et al. (2017). Bayesian Methods for Media Mix Modeling.</li>
-                            <li>McElreath, R. (2020). Statistical Rethinking.</li>
+                            <li><strong>Google (2024).</strong> <em>Meridian: A Bayesian Mixed Marketing Modeling (MMM) Framework</em>. Google Open Source Documentation.</li>
+                            <li><strong>Jin, Y., et al. (2017).</strong> <em>Bayesian Methods for Media Mix Modeling with Carryover and Shape Effects</em>. Google Research. (O <em>paper</em> seminal que fundamenta a matemática de Adstock/Hill usada no Meridian).</li>
+                            <li><strong>McElreath, R. (2020).</strong> <em>Statistical Rethinking: A Bayesian Course with Examples in R and Stan</em>. CRC Press. (Fundamentação para a modelagem hierárquica e priors).</li>
+                            <li><strong>Tellis, G. J. (2006).</strong> <em>Modeling Marketing Mix</em>. Handbook of Marketing Research. (Teoria clássica de Saturação e Adstock).</li>
                         </ul>
                     </div>
                 </div>
