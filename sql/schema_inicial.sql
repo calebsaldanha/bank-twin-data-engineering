@@ -78,11 +78,12 @@ CREATE TABLE eventos_app (
 
 CREATE TABLE transacoes_cartao (
     transacao_id SERIAL PRIMARY KEY,
-    cartao_id INTEGER REFERENCES cartoes(cartao_id),
+    cartao_id INTEGER NOT NULL REFERENCES cartoes(cartao_id),
     data_transacao TIMESTAMP,
     valor DECIMAL(15,2),
     estabelecimento VARCHAR(100),
-    mcc_grupo VARCHAR(50)
+    mcc_grupo VARCHAR(50),
+    tipo_transacao VARCHAR(20) -- Coluna adicionada
 );
 
 CREATE TABLE contratos_credito (
