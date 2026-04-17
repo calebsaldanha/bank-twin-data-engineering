@@ -14,9 +14,9 @@ engine = create_engine(os.environ.get("DATABASE_URL"))
 def simulate_layer_1():
     print("Gerando Campanhas, Clientes e Dispositivos...")
     
+    # 1. Campanhas
     canais = ['Google Search', 'Meta Ads', 'LinkedIn', 'Email Marketing', 'YouTube']
     objetivos = ['Abertura Conta', 'Upgrade Cartao', 'Investimento', 'Credito Pessoal']
-    
     campanhas = []
     for i in range(20):
         obj = np.random.choice(objetivos)
@@ -29,6 +29,7 @@ def simulate_layer_1():
         })
     pd.DataFrame(campanhas).to_sql('campanhas_marketing', engine, if_exists='append', index=False)
     
+    # 2. Clientes com CPF Unico
     clientes = []
     for _ in range(1000):
         renda = np.random.exponential(5000) + 1500
@@ -39,7 +40,7 @@ def simulate_layer_1():
         
         clientes.append({
             'nome': fake.name(),
-            'cpf': fake.cpf(),
+            'cpf': fake.unique.cpf(), # Garante que nao haja duplicatas
             'data_nascimento': fake.date_of_birth(minimum_age=18, maximum_age=85),
             'renda_declarada': round(renda, 2),
             'segmento': segmento,
@@ -47,7 +48,7 @@ def simulate_layer_1():
         })
     pd.DataFrame(clientes).to_sql('clientes', engine, if_exists='append', index=False)
     
-    # Vinculando dispositivos
+    # 3. Dispositivos
     ids_clientes = pd.read_sql("SELECT cliente_id FROM clientes", engine)['cliente_id'].tolist()
     dispositivos = [{
         'dispositivo_id': str(uuid.uuid4()),
@@ -58,7 +59,7 @@ def simulate_layer_1():
     } for c_id in ids_clientes]
     pd.DataFrame(dispositivos).to_sql('sessoes_dispositivos', engine, if_exists='append', index=False)
     
-    print("Sucesso na Camada 1.")
+    print("Camada 1 populada com sucesso.")
 
 if __name__ == "__main__":
     simulate_layer_1()
