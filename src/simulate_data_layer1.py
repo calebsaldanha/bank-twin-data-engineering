@@ -1,106 +1,64 @@
 import pandas as pd
-import os
-from dotenv import load_dotenv
-load_dotenv()
 import numpy as np
 from faker import Faker
-from sqlalchemy import create_engine, text
-import random
+from sqlalchemy import create_engine
+import os
+from dotenv import load_dotenv
+import uuid
 from datetime import datetime, timedelta
 
+load_dotenv()
 fake = Faker('pt_BR')
-Faker.seed(42)
-np.random.seed(42)
+engine = create_engine(os.environ.get("DATABASE_URL"))
 
-DATABASE_URL = os.environ.get("DATABASE_URL")
-engine = create_engine(DATABASE_URL)
-
-def limpar_base_antiga():
-    print("Limpando dados antigos de teste...")
-    # Correção: O engine.begin() já gerencia a transação e o commit automaticamente
-    with engine.begin() as conn:
-        conn.execute(text("TRUNCATE TABLE clientes CASCADE;"))
-        conn.execute(text("TRUNCATE TABLE campanhas_marketing CASCADE;"))
-
-def gerar_clientes(n=50000):
-    print(f"A gerar {n} clientes sintéticos (Isso pode levar cerca de 30-60 segundos)...")
-    clientes = []
+def simulate_layer_1():
+    print("Gerando Campanhas, Clientes e Dispositivos...")
     
-    for _ in range(n):
-        rand_renda = np.random.random()
-        if rand_renda < 0.60:
-            renda = round(np.random.uniform(1500, 5000), 2)
-            segmento = 'Massificado'
-        elif rand_renda < 0.85:
-            renda = round(np.random.uniform(5001, 15000), 2)
-            segmento = 'Principal'
-        elif rand_renda < 0.98:
-            renda = round(np.random.uniform(15001, 40000), 2)
-            segmento = 'Prime'
-        else:
-            renda = round(np.random.uniform(40001, 150000), 2)
-            segmento = 'Private'
-            
-        score_base = np.random.normal(loc=600, scale=150)
-        if segmento in ['Prime', 'Private']:
-            score_base += 100
-        behavior_score = int(np.clip(score_base, 0, 1000))
-        
-        data_nascimento = fake.date_of_birth(minimum_age=18, maximum_age=80)
-        dias_conta = random.randint(30, 1800)
-        data_abertura = datetime.now() - timedelta(days=dias_conta)
-        cpf = str(random.randint(10000000000, 99999999999))
+    canais = ['Google Search', 'Meta Ads', 'LinkedIn', 'Email Marketing', 'YouTube']
+    objetivos = ['Abertura Conta', 'Upgrade Cartao', 'Investimento', 'Credito Pessoal']
+    
+    campanhas = []
+    for i in range(20):
+        obj = np.random.choice(objetivos)
+        campanhas.append({
+            'nome_campanha': f"Campanha_{obj}_{i}",
+            'objetivo': obj,
+            'canal': np.random.choice(canais),
+            'custo_clique_estimado': round(np.random.uniform(0.5, 5.0), 4),
+            'data_inicio': fake.date_between(start_date='-1y', end_date='today')
+        })
+    pd.DataFrame(campanhas).to_sql('campanhas_marketing', engine, if_exists='append', index=False)
+    
+    clientes = []
+    for _ in range(1000):
+        renda = np.random.exponential(5000) + 1500
+        if renda > 25000: segmento = 'Private'
+        elif renda > 12000: segmento = 'Prime'
+        elif renda > 5000: segmento = 'Principal'
+        else: segmento = 'Massificado'
         
         clientes.append({
-            'cpf': cpf,
-            'data_nascimento': data_nascimento,
-            'renda_declarada': renda,
-            'cidade': fake.city(),
-            'estado': fake.estado_sigla(),
+            'nome': fake.name(),
+            'cpf': fake.cpf(),
+            'data_nascimento': fake.date_of_birth(minimum_age=18, maximum_age=85),
+            'renda_declarada': round(renda, 2),
             'segmento': segmento,
-            'behavior_score': behavior_score,
-            'data_abertura_conta': data_abertura
+            'behavior_score': np.random.randint(300, 1000)
         })
-        
-    df_clientes = pd.DataFrame(clientes)
-    print("A inserir 50.000 clientes no PostgreSQL...")
-    df_clientes.to_sql('clientes', engine, if_exists='append', index=False)
-    print("Clientes inseridos com sucesso!")
-
-def gerar_campanhas():
-    print("A gerar histórico de campanhas de marketing...")
-    produtos = ['CredPessoal', 'Cartao_Prime', 'Renegociacao', 'Conta_Massificado', 'CredAuto']
-    canais = ['Meta_Ads', 'TikTok', 'Google_Search', 'Email_CRM', 'App_Push']
-    campanhas = []
+    pd.DataFrame(clientes).to_sql('clientes', engine, if_exists='append', index=False)
     
-    for i in range(1, 51):
-        canal = random.choice(canais)
-        produto = random.choice(produtos)
-        
-        if canal in ['Meta_Ads', 'Google_Search', 'TikTok']:
-            investimento = round(np.random.uniform(1000, 10000), 2)
-        else:
-            investimento = round(np.random.uniform(100, 500), 2)
-            
-        dias_atras = random.randint(30, 365)
-        data_inicio = datetime.now() - timedelta(days=dias_atras)
-        duracao = random.randint(5, 45)
-        data_fim = data_inicio + timedelta(days=duracao)
-        
-        campanhas.append({
-            'nome_campanha': f"Campanha_{produto}_{canal}_Q{random.randint(1,4)}",
-            'canal': canal,
-            'produto_alvo': produto,
-            'investimento_diario': investimento,
-            'data_inicio': data_inicio.date(),
-            'data_fim': data_fim.date()
-        })
-        
-    df_campanhas = pd.DataFrame(campanhas)
-    df_campanhas.to_sql('campanhas_marketing', engine, if_exists='append', index=False)
-    print("Campanhas inseridas com sucesso!")
+    # Vinculando dispositivos
+    ids_clientes = pd.read_sql("SELECT cliente_id FROM clientes", engine)['cliente_id'].tolist()
+    dispositivos = [{
+        'dispositivo_id': str(uuid.uuid4()),
+        'cliente_id': c_id,
+        'os': np.random.choice(['Android', 'iOS'], p=[0.7, 0.3]),
+        'modelo_aparelho': fake.word(),
+        'data_primeiro_acesso': datetime.now() - timedelta(days=np.random.randint(1, 365))
+    } for c_id in ids_clientes]
+    pd.DataFrame(dispositivos).to_sql('sessoes_dispositivos', engine, if_exists='append', index=False)
+    
+    print("Sucesso na Camada 1.")
 
 if __name__ == "__main__":
-    limpar_base_antiga()
-    gerar_clientes(50000)
-    gerar_campanhas()
+    simulate_layer_1()
