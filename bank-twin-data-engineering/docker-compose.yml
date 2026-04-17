@@ -1,0 +1,15 @@
+version: '3.8'
+
+services:
+  db:
+    image: postgres:15-alpine
+    container_name: bank_twin_db
+    environment:
+      POSTGRES_USER: caleb
+      POSTGRES_PASSWORD: adminpassword
+      POSTGRES_DB: bank_twin
+    ports:
+      - "5433:5432"
+    volumes:
+      # Caminho relativo: mapeia a pasta 'sql' local para a pasta de inicialização do container
+      - ./sql:/docker-entrypoint-initdb.d
