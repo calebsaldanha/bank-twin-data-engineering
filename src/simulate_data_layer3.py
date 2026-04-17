@@ -1,132 +1,87 @@
-import random
-import os
-from dotenv import load_dotenv
-load_dotenv()
 import pandas as pd
 import numpy as np
-from sqlalchemy import create_engine, text
+from sqlalchemy import create_engine
+import os
+from dotenv import load_dotenv
 from datetime import datetime, timedelta
+import uuid
 
-np.random.seed(42)
+load_dotenv()
+engine = create_engine(os.environ.get("DATABASE_URL"))
 
-DATABASE_URL = os.environ.get("DATABASE_URL")
-engine = create_engine(DATABASE_URL)
+def simulate_layer_3():
+    print("Iniciando Camada 3: Atribuicao Multi-Click e Transacional...")
+    
+    # Carregar dados necessarios
+    df_clientes = pd.read_sql("SELECT cliente_id, segmento, data_cadastro FROM clientes", engine)
+    df_dispositivos = pd.read_sql("SELECT dispositivo_id, cliente_id FROM sessoes_dispositivos", engine)
+    df_campanhas = pd.read_sql("SELECT campanha_id FROM campanhas_marketing", engine)
+    df_cartoes = pd.read_sql("SELECT cartao_id, conta_id FROM cartoes", engine)
+    
+    if df_clientes.empty or df_campanhas.empty:
+        print("Erro: Faltam dados das camadas anteriores.")
+        return
 
-def gerar_historico_credito():
-    print("A simular Histórico de Pagamentos, Inadimplência e Renegociações...")
-    
-    # Carregar contratos e clientes para cruzar perfil de risco
-    query = """
-        SELECT c.contrato_id, c.cliente_id, c.tipo_produto, c.valor_financiado, c.prazo_meses, c.data_contratacao, cl.segmento
-        FROM contratos_credito c
-        JOIN clientes cl ON c.cliente_id = cl.cliente_id
-    """
-    df_contratos = pd.read_sql(query, engine)
-    
-    parcelas = []
-    renegociacoes = []
-    
-    # Processamento iterativo otimizado
-    for _, row in df_contratos.iterrows():
-        # Definir probabilidade de atraso baseada no produto e segmento
-        prob_atraso = 0.05
-        if row['segmento'] == 'Massificado': prob_atraso += 0.15
-        if row['tipo_produto'] == 'CredPessoal': prob_atraso += 0.10
-        if row['tipo_produto'] == 'CredImob': prob_atraso -= 0.10
-        prob_atraso = max(0.01, min(prob_atraso, 0.40))
-        
-        valor_parcela = row['valor_financiado'] / row['prazo_meses']
-        
-        # Simular os últimos 6 meses de parcelas (ou menos se contrato for recente)
-        meses_ativos = min(6, row['prazo_meses'])
-        
-        for i in range(1, meses_ativos + 1):
-            data_vencimento = row['data_contratacao'] + pd.DateOffset(months=i)
-            if data_vencimento > datetime.now():
-                break # Parcela no futuro
-                
-            is_atrasado = np.random.random() < prob_atraso
-            dias_atraso = int(np.random.exponential(scale=30)) if is_atrasado else 0
-            
-            # Limitar atraso absurdo
-            dias_atraso = min(dias_atraso, 300)
-            
-            data_pag = data_vencimento + timedelta(days=dias_atraso) if not (is_atrasado and dias_atraso > 90) else None
-            
-            parcelas.append({
-                'contrato_id': row['contrato_id'],
-                'numero_parcela': i,
-                'data_vencimento': data_vencimento.date(),
-                'data_pagamento': data_pag.date() if pd.notnull(data_pag) else None,
-                'valor_parcela': round(valor_parcela, 2),
-                'dias_atraso': dias_atraso
-            })
-            
-            # Se atrasou muito, gera uma renegociação
-            if dias_atraso > 60 and i == meses_ativos - 1:
-                renegociacoes.append({
-                    'contrato_original_id': row['contrato_id'],
-                    'novo_contrato_id': None, # Simplificação temporal
-                    'data_hora': datetime.now() - timedelta(days=random.randint(1, 30)),
-                    'desconto_principal': round(row['valor_financiado'] * 0.1, 2),
-                    'desconto_juros': 0.0,
-                    'valor_total_renegociado': round(row['valor_financiado'] * 0.9, 2),
-                    'status_acordo': np.random.choice(['Promessa_Pagamento', 'Quebra_Acordo', 'Efetivado'], p=[0.2, 0.3, 0.5])
-                })
-
-    print(f"A inserir {len(parcelas)} parcelas geradas...")
-    pd.DataFrame(parcelas).to_sql('parcelas_credito', engine, if_exists='append', index=False, chunksize=20000)
-    
-    if renegociacoes:
-        print(f"A inserir {len(renegociacoes)} eventos de renegociação...")
-        pd.DataFrame(renegociacoes).to_sql('reorganizacao_renegociacao', engine, if_exists='append', index=False, chunksize=10000)
-
-def gerar_eventos_app_marketing():
-    print("A gerar Telemetria de App e Interações de Marketing...")
-    
-    df_clientes = pd.read_sql("SELECT cliente_id, segmento FROM clientes", engine)
-    
+    # --- A. EVENTOS DE MARKETING (Jornada Multi-Click) ---
     eventos = []
+    print("Gerando jornadas de marketing pre-conversao...")
     
-    # Simulando um recorte de sessões ativas para 30% da base (para não estourar a memória)
-    clientes_ativos = df_clientes.sample(frac=0.30)
-    
-    for _, row in clientes_ativos.iterrows():
-        n_eventos = np.random.randint(3, 15)
-        session_id = f"sess_{row['cliente_id']}_{np.random.randint(1000,9999)}"
-        plataforma = np.random.choice(['App_iOS', 'App_Android'])
+    for _, row in df_clientes.iterrows():
+        d_id = df_dispositivos[df_dispositivos['cliente_id'] == row['cliente_id']]['dispositivo_id'].iloc[0]
+        data_conv = row['data_cadastro']
         
-        for _ in range(n_eventos):
-            # Viés de navegação por segmento
-            if row['segmento'] == 'Massificado':
-                acoes = ['view_saldo', 'click_banner_emprestimo', 'simulate_tax_auto', 'init_checkout_credito', 'error_validation_renda']
-                prob = [0.4, 0.2, 0.1, 0.1, 0.2]
-            else:
-                acoes = ['view_saldo', 'view_investimentos', 'click_cartao_black', 'transfer_pix_out']
-                prob = [0.5, 0.3, 0.1, 0.1]
-                
-            evento = np.random.choice(acoes, p=prob)
+        # Gerar de 2 a 5 cliques antes da conta
+        num_cliques = np.random.randint(2, 6)
+        for i in range(num_cliques):
+            sessao = str(uuid.uuid4())
+            # Cliques ocorrem entre 1 e 15 dias antes da conversao
+            data_clique = data_conv - timedelta(days=np.random.randint(1, 15), minutes=np.random.randint(0, 1440))
             
             eventos.append({
-                'cliente_id': row['cliente_id'],
-                'session_id': session_id,
-                'plataforma': plataforma,
-                'data_hora': datetime.now() - timedelta(days=np.random.randint(1, 30), hours=np.random.randint(0, 23)),
-                'produto_contexto': 'Geral' if 'view' in evento else 'Credito',
-                'evento_nome': evento,
-                'tempo_tela_segundos': np.random.randint(5, 120),
-                'latitude': np.random.uniform(-23.6, -23.4), # Foco em SP/Barueri
-                'longitude': np.random.uniform(-46.8, -46.6)
+                'dispositivo_id': d_id,
+                'cliente_id': None, # Ainda nao era cliente no clique
+                'campanha_id': int(df_campanhas.sample(1)['campanha_id'].iloc[0]),
+                'sessao_id': sessao,
+                'tipo_evento': 'click_ad',
+                'data_evento': data_clique,
+                'metadados': '{"canal_origem": "paid_media"}'
             })
+            
+        # Evento de Login Pos-Conversao
+        eventos.append({
+            'dispositivo_id': d_id,
+            'cliente_id': row['cliente_id'],
+            'campanha_id': None,
+            'sessao_id': str(uuid.uuid4()),
+            'tipo_evento': 'app_login',
+            'data_evento': data_conv + timedelta(hours=1),
+            'metadados': '{"status": "first_access"}'
+        })
 
-    print(f"A inserir {len(eventos)} logs de navegação do App...")
-    pd.DataFrame(eventos).to_sql('eventos_navegacao', engine, if_exists='append', index=False, chunksize=20000)
+    pd.DataFrame(eventos).to_sql('eventos_app', engine, if_exists='append', index=False)
+
+    # --- B. TRANSAÇÕES DE CARTÃO (Consumo) ---
+    transacoes = []
+    mccs = ['Alimentacao', 'Transporte', 'Lazer', 'Saude', 'Servicos', 'Viagens']
+    print("Gerando transacoes financeiras...")
+
+    for _, row in df_cartoes.iterrows():
+        # Recuperar segmento do cliente dono da conta
+        # Simplificando: clientes private gastam mais
+        num_tx = np.random.randint(10, 31)
+        for _ in range(num_tx):
+            valor = round(np.random.exponential(150.0), 2)
+            transacoes.append({
+                'cartao_id': row['cartao_id'],
+                'data_transacao': datetime.now() - timedelta(days=np.random.randint(0, 30)),
+                'valor': valor,
+                'estabelecimento': 'Estabelecimento ' + str(np.random.randint(1, 500)),
+                'mcc_grupo': np.random.choice(mccs),
+                'tipo_transacao': np.random.choice(['Presencial', 'E-commerce'], p=[0.6, 0.4])
+            })
+            
+    pd.DataFrame(transacoes).to_sql('transacoes_cartao', engine, if_exists='append', index=False)
+    print(f"Sucesso: {len(eventos)} eventos e {len(transacoes)} transacoes criadas.")
 
 if __name__ == "__main__":
-    with engine.begin() as conn:
-        conn.execute(text("TRUNCATE TABLE parcelas_credito CASCADE;"))
-        conn.execute(text("TRUNCATE TABLE reorganizacao_renegociacao CASCADE;"))
-        conn.execute(text("TRUNCATE TABLE eventos_navegacao CASCADE;"))
-        
-    gerar_historico_credito()
-    gerar_eventos_app_marketing()
+    simulate_layer_3()
