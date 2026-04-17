@@ -1,4 +1,7 @@
 import random
+import os
+from dotenv import load_dotenv
+load_dotenv()
 import pandas as pd
 import numpy as np
 from sqlalchemy import create_engine, text
@@ -6,7 +9,7 @@ from datetime import datetime, timedelta
 
 np.random.seed(42)
 
-DATABASE_URL = "postgresql://caleb:adminpassword@127.0.0.1:5433/bank_twin"
+DATABASE_URL = os.environ.get("DATABASE_URL")
 engine = create_engine(DATABASE_URL)
 
 def gerar_historico_credito():

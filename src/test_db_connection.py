@@ -1,8 +1,11 @@
 from sqlalchemy import create_engine, text
+import os
+from dotenv import load_dotenv
+load_dotenv()
 import pandas as pd
 
 # String de conexão apontando para a porta 5432 que o Docker abriu
-DATABASE_URL = "postgresql://caleb:adminpassword@127.0.0.1:5433/bank_twin"
+DATABASE_URL = os.environ.get("DATABASE_URL")
 
 def testar_conexao():
     try:

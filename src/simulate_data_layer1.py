@@ -1,4 +1,7 @@
 import pandas as pd
+import os
+from dotenv import load_dotenv
+load_dotenv()
 import numpy as np
 from faker import Faker
 from sqlalchemy import create_engine, text
@@ -9,7 +12,7 @@ fake = Faker('pt_BR')
 Faker.seed(42)
 np.random.seed(42)
 
-DATABASE_URL = "postgresql://caleb:adminpassword@127.0.0.1:5433/bank_twin"
+DATABASE_URL = os.environ.get("DATABASE_URL")
 engine = create_engine(DATABASE_URL)
 
 def limpar_base_antiga():
