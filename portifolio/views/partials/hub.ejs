@@ -1,0 +1,216 @@
+<section id="hub">
+    <div class="container">
+        <h2 class="section-title">Hub de Conhecimento</h2>
+        
+        <div class="articles-grid">
+            <div class="article-card glass" onclick="abrirHub('artigo-mmm')" style="cursor: pointer;">
+                <div class="article-content">
+                    <div class="article-meta" style="margin-bottom: 1rem; font-size: 0.8rem; color: var(--text-muted);">
+                        <span class="article-category">Data Science / Econometria</span> | <span class="article-date">Dez 2025</span>
+                    </div>
+                    <h3 style="margin: 1rem 0;">Meridian: Uma Abordagem Bayesiana para MMM</h3>
+                    <p style="color: var(--text-muted);">Uma reconstrução teórica da arquitetura matemática do framework do Google, abordando Adstock Geométrico e Saturação Hill.</p>
+                    <span style="color: var(--accent); font-weight:bold; margin-top: 1rem; display: inline-block;">Ler Artigo <i class="fas fa-arrow-right"></i></span>
+                </div>
+            </div>
+
+            <div class="article-card glass" onclick="abrirHub('simulador-outliers')" style="cursor: pointer;">
+                <div class="article-content">
+                    <div class="article-meta" style="margin-bottom: 1rem; font-size: 0.8rem; color: var(--text-muted);">
+                        <span class="article-category" style="color: var(--accent);">Sandbox Interativo</span> | <span class="article-date">Maio 2026</span>
+                    </div>
+                    <h3 style="margin: 1rem 0;">Média vs Mediana: A Ilusão dos Outliers</h3>
+                    <p style="color: var(--text-muted);">Entenda visualmente por que a média estatística pode mascarar a realidade financeira do seu negócio quando existem clientes com rendas extremas.</p>
+                    <span style="color: var(--accent); font-weight:bold; margin-top: 1rem; display: inline-block;">Abrir Simulador <i class="fas fa-play"></i></span>
+                </div>
+            </div>
+        </div>
+
+        <div id="artigo-mmm" class="article-detail glass" style="display:none; padding: 40px; margin-top: 2rem;">
+            <div class="detail-header" style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 2rem;">
+                <h3 style="font-family:'Space Grotesk'; font-size: 1.8rem;">Meridian: Framework MMM Bayesiano</h3>
+                <button class="close-hub-btn" onclick="fecharHub('artigo-mmm')" style="background:none; border:none; color:var(--accent); font-size: 2.5rem; cursor:pointer;">&times;</button>
+            </div>
+            <div class="detail-content article-body">
+                <div class="article-note" style="background: rgba(255,255,255,0.05); padding: 20px; border-left: 4px solid var(--accent); margin-bottom: 30px; border-radius: 4px;">
+                    <p style="margin-bottom: 10px; color: var(--accent);"><strong>Nota Técnica e Contextualização:</strong></p>
+                    <p style="font-style: italic; font-size: 0.95rem; color: var(--text-muted);">
+                        Este artigo apresenta uma <strong>análise independente e uma reconstrução teórica</strong> da arquitetura matemática do framework "Meridian", baseada exclusivamente na documentação técnica de código aberto (Open Source) e em papers acadêmicos publicados pela equipe de pesquisa do Google.
+                    </p>
+                    <p style="font-style: italic; font-size: 0.95rem; color: var(--text-muted); margin-bottom: 0;">
+                        O objetivo deste estudo é demonstrar a aplicação prática de conceitos avançados de estatística Bayesiana e modelagem hierárquica na resolução de problemas modernos de mensuração de marketing. O autor não possui vínculo com o desenvolvimento proprietário da ferramenta, servindo este texto como material educativo e de análise de engenharia reversa conceitual.
+                    </p>
+                </div>
+
+                <h4 style="margin-top: 2rem; color: var(--accent);">Resumo</h4>
+                <p style="color: var(--text-muted);">Este artigo apresenta a estrutura teórica e matemática do Meridian, o <em>framework</em> de Marketing Mix Modeling (MMM) desenvolvido pelo Google. Em contraste com modelos determinísticos ou baseados em cookies, o Meridian utiliza regressão Bayesiana Hierárquica em nível geográfico para inferir causalidade em dados agregados. O modelo incorpora funções de transformação de mídia (Adstock Geométrico e Saturação Hill), priors informativos para calibração via experimentos de incrementalidade e quantificação de incerteza através de amostragem MCMC (<em>Markov Chain Monte Carlo</em>). Discutimos as equações fundamentais, a parametrização dos efeitos de mídia e a otimização orçamentária sob retornos decrescentes.</p>
+
+                <h4 style="margin-top: 2rem; color: var(--accent);">1. Introdução</h4>
+                <p style="color: var(--text-muted);">Com a depreciação de identificadores de terceiros e o aumento das restrições de privacidade (GDPR, ATT), a atribuição granular (MTA) perde precisão. O Marketing Mix Modeling (MMM) ressurge como a metodologia padrão para mensuração de eficácia de mídia, pois utiliza dados agregados e não requer rastreamento individual.</p>
+                <p style="color: var(--text-muted);">O <strong>Modelo Meridian</strong> inova ao propor uma arquitetura que resolve as limitações clássicas do MMM (colinearidade, falta de causalidade) através de dois pilares:</p>
+                <ul style="color: var(--text-muted); padding-left: 1.5rem;">
+                    <li><strong>Modelagem Geo-Level:</strong> Uso de dados seccionados por geografia (ex: Estados, DMAs) para aumentar o tamanho da amostra e variância do sinal.</li>
+                    <li><strong>Inferência Bayesiana:</strong> Incorporação de conhecimento prévio (Priors) derivados de experimentos de incrementalidade para restringir o espaço de soluções.</li>
+                </ul>
+
+                <h4 style="margin-top: 2rem; color: var(--accent);">2. Especificação do Modelo</h4>
+                <p style="color: var(--text-muted);">O Meridian é formulado como um modelo de regressão aditiva, onde a variável resposta (KPI) é decomposta em tendência, sazonalidade, efeitos de mídia e variáveis de controle.</p>
+
+                <h5 style="margin-top: 1rem; color: var(--text-main);">2.1 Equação Geral do Modelo</h5>
+                <p style="color: var(--text-muted);">Seja $Y_{g,t}$ o KPI de interesse (vendas, conversões) na geografia $g$ e tempo $t$. O modelo é definido como:</p>
+                
+                <p style="text-align: center; margin: 2rem 0; color: var(--text-main); font-size: 1.1rem; overflow-x: auto;">
+                $$Y_{g,t} = \underbrace{\tau_{g,t}}_{\text{Tendência}} + \underbrace{\sum_{m=1}^{M} \beta_{g,m} \cdot f_m(x_{g,t,m})}_{\text{Efeitos de Mídia}} + \underbrace{\sum_{c=1}^{C} \gamma_{g,c} \cdot z_{g,t,c}}_{\text{Variáveis de Controle}} + \epsilon_{g,t}$$
+                </p>
+
+                <p style="color: var(--text-muted);">Onde:</p>
+                <ul style="color: var(--text-muted); padding-left: 1.5rem;">
+                    <li>$\tau_{g,t}$: Componente de tendência e sazonalidade.</li>
+                    <li>$x_{g,t,m}$: Execução de mídia bruta (impressões, gasto) do canal $m$.</li>
+                    <li>$f_m(\cdot)$: Função de transformação não-linear (Adstock e Saturação).</li>
+                    <li>$z_{g,t,c}$: Variáveis de controle (preço, competidores, feriados).</li>
+                    <li>$\epsilon_{g,t}$: Termo de erro, tipicamente $\epsilon_{g,t} \sim \text{Normal}(0, \sigma^2)$.</li>
+                </ul>
+
+                <h4 style="margin-top: 2rem; color: var(--accent);">3. Transformação de Variáveis de Mídia</h4>
+                <p style="color: var(--text-muted);">O Meridian modela a "física" da publicidade: o efeito de um anúncio não é instantâneo nem linear.</p>
+
+                <h5 style="margin-top: 1rem; color: var(--text-main);">3.1 Efeito de Defasagem (Adstock)</h5>
+                <p style="color: var(--text-muted);">O conceito de Adstock captura o efeito residual da publicidade ao longo do tempo (memória do consumidor). O Meridian utiliza, primariamente, o <strong>Adstock Geométrico</strong>.</p>
+                <p style="color: var(--text-muted);">Seja $x_{t}$ o investimento no tempo $t$, o estoque de mídia acumulado $A_t$ é:</p>
+                
+                <p style="text-align: center; margin: 1.5rem 0; color: var(--text-main); font-size: 1.1rem; overflow-x: auto; max-width: 100%; padding-bottom: 0.5rem;">
+                $$A(x_{t}, \alpha) = x_{t} + \alpha \cdot A(x_{t-1}, \alpha)$$
+                </p>
+                
+                <ul style="color: var(--text-muted); padding-left: 1.5rem;">
+                    <li><strong>$\alpha$ (Taxa de Decaimento):</strong> Parâmetro entre $0$ e $1$. Se $\alpha = 0.8$, 80% do efeito do anúncio persiste na semana seguinte.</li>
+                    <li>No modelo Bayesiano, $\alpha$ é tratado como uma variável aleatória com uma distribuição <em>Beta</em> como prior: $\alpha \sim \text{Beta}(a, b)$.</li>
+                </ul>
+
+                <h5 style="margin-top: 1rem; color: var(--text-main);">3.2 Efeito de Saturação (Hill Function)</h5>
+                <p style="color: var(--text-muted);">Para modelar os retornos decrescentes (onde o ROI marginal cai à medida que o investimento aumenta), o Meridian aplica a função de Hill sobre o Adstock transformado.</p>
+                
+                <p style="text-align: center; margin: 1.5rem 0; color: var(--text-main); font-size: 1.1rem; overflow-x: auto; max-width: 100%; padding-bottom: 0.5rem;">
+                $$Hill(A_t; K, S) = \frac{1}{1 + \left( \frac{K}{A_t} \right)^S}$$
+                </p>
+                
+                <p style="color: var(--text-muted);">Onde:</p>
+                <ul style="color: var(--text-muted); padding-left: 1.5rem;">
+                    <li><strong>$A_t$</strong>: Mídia transformada pelo Adstock.</li>
+                    <li><strong>$S$ (Slope/Forma):</strong> Controla a inclinação da curva em "S". $S > 1$ indica curva em S; $S \leq 1$ indica curva C (côncava).</li>
+                    <li><strong>$K$ (Half-Saturation Point):</strong> O ponto onde a resposta atinge 50% do seu valor máximo.</li>
+                </ul>
+                <p style="color: var(--text-muted);">A combinação completa para um canal de mídia $m$ no modelo é:</p>
+                <p style="text-align: center; margin: 1.5rem 0; color: var(--text-main); font-size: 1.1rem; overflow-x: auto; max-width: 100%; padding-bottom: 0.5rem;">
+                $$Contribution_m = \mu_m \times Hill(Adstock(x_{m}), K_m, S_m)$$
+                </p>
+
+                <h4 style="margin-top: 2rem; color: var(--accent);">4. Estrutura Bayesiana Hierárquica</h4>
+                <p style="color: var(--text-muted);">A principal vantagem técnica do Meridian é o tratamento hierárquico dos parâmetros. Isso permite que o modelo "aprenda" padrões nacionais enquanto respeita as particularidades regionais (<em>Partial Pooling</em>).</p>
+
+                <h5 style="margin-top: 1rem; color: var(--text-main);">4.1 Hierarquia Geográfica</h5>
+                <p style="color: var(--text-muted);">Para um coeficiente de mídia $\beta_{g,m}$ (eficiência do canal $m$ na geografia $g$), assumimos que ele vem de uma distribuição comum (população nacional):</p>
+                
+                <p style="text-align: center; margin: 1.5rem 0; color: var(--text-main); font-size: 1.1rem; overflow-x: auto;">
+                $$
+                \begin{aligned}
+                \beta_{g,m} &\sim \text{LogNormal}(\mu_m, \sigma_m) \\
+                \mu_m &\sim \text{Normal}(\dots) \\
+                \sigma_m &\sim \text{HalfNormal}(\dots)
+                \end{aligned}
+                $$
+                </p>
+                <p style="color: var(--text-muted);">Isso permite o <em>Partial Pooling</em>, onde geografias menores aprendem com a média nacional.</p>
+
+                <h5 style="margin-top: 1rem; color: var(--text-main);">4.2 Amostragem MCMC</h5>
+                <p style="color: var(--text-muted);">O Meridian resolve essas equações complexas não analiticamente, mas computacionalmente, usando o amostrador <strong>NUTS (No-U-Turn Sampler)</strong>, um tipo de <em>Hamiltonian Monte Carlo</em>. Isso gera milhares de cenários plausíveis (distribuição posterior) para cada parâmetro, permitindo intervalos de credibilidade.</p>
+
+                <h4 style="margin-top: 2rem; color: var(--accent);">5. Calibração com Experimentos (ROI Priors)</h4>
+                <p style="color: var(--text-muted);">Um dos diferenciais críticos do Meridian documentado pelo Google é a capacidade de usar "Ground Truth" para corrigir o modelo. MMMs tradicionais sofrem com correlações espúrias. O Meridian resolve isso injetando resultados de Testes A/B ou Geo-Experiments nos <strong>Priors</strong> do ROI.</p>
+
+                <h5 style="margin-top: 1rem; color: var(--text-main);">5.1 Formulação do Prior de ROI</h5>
+                <p style="color: var(--text-muted);">Se um experimento de incrementalidade indicou que o canal <em>Search</em> tem um ROI de 4.0 com erro padrão de 0.5, o Meridian permite configurar o Prior do coeficiente $\beta_{Search}$ para refletir isso.</p>
+                <p style="color: var(--text-muted);">A relação matemática é:</p>
+                <p style="text-align: center; margin: 1.5rem 0; color: var(--text-main); font-size: 1.1rem; overflow-x: auto; max-width: 100%; padding-bottom: 0.5rem;">
+                $$ROI_{m} = \frac{\sum \text{Contribuição Marginal}_m}{\sum \text{Custo}_m}$$
+                </p>
+                <p style="color: var(--text-muted);">O modelo penaliza soluções onde o ROI inferido se desvia significativamente do ROI experimental, equilibrando a verossimilhança dos dados históricos com a evidência experimental.</p>
+                <p style="text-align: center; margin: 1.5rem 0; color: var(--text-main); font-size: 1.1rem; overflow-x: auto; max-width: 100%; padding-bottom: 0.5rem;">
+                $$P(\theta | Data) \propto P(Data | \theta) \times P_{calibração}(\theta)$$
+                </p>
+
+                <h4 style="margin-top: 2rem; color: var(--accent);">6. Otimização Orçamentária</h4>
+                <p style="color: var(--text-muted);">Com a curva de resposta $f_m(x)$ estimada para cada canal, o objetivo final é encontrar o vetor de investimento $X^* = [x_1, \dots, x_M]$ que maximiza a receita total, sujeito a uma restrição orçamentária $B$.</p>
+
+                <h5 style="margin-top: 1rem; color: var(--text-main);">6.1 Problema de Otimização Restrita</h5>
+                <p style="text-align: center; margin: 1.5rem 0; color: var(--text-main); font-size: 1.1rem; overflow-x: auto; max-width: 100%; padding-bottom: 0.5rem;">
+                $$
+                \begin{aligned}
+                \text{Maximizar } & \sum_{m=1}^{M} Response_m(x_m) \\
+                \text{Sujeito a } & \sum_{m=1}^{M} x_m \leq B \\
+                & L_m \leq x_m \leq U_m
+                \end{aligned}
+                $$
+                </p>
+                <p style="color: var(--text-muted);">Onde $L_m$ e $U_m$ são limites inferiores e superiores de gasto para evitar extrapolação da curva de Hill para regiões não observadas. O Meridian resolve isso usando otimizadores de gradiente (como SLSQP) sobre a superfície de resposta média posterior.</p>
+
+                <h4 style="margin-top: 2rem; color: var(--accent);">7. Conclusão</h4>
+                <p style="color: var(--text-muted);">O Modelo Meridian representa o estado da arte em MMM, transicionando da econometria frequentista tradicional para a inferência Bayesiana computacional. Ao modelar explicitamente a hierarquia geográfica e as transformações não-lineares de Adstock/Saturação, e ao permitir a injeção de priors experimentais, o Meridian oferece um caminho robusto para mensuração de causalidade em um ecossistema sem cookies. A transparência do código <em>open-source</em> permite que cientistas de dados validem e adaptem as premissas matemáticas, garantindo que o modelo reflita a realidade do negócio e não seja uma "caixa preta".</p>
+                
+                <div class="article-footer" style="margin-top: 3rem; border-top: 1px solid var(--glass-border); padding-top: 1.5rem;">
+                    <h5 style="color: var(--text-main); margin-bottom: 1rem;">Referências Bibliográficas e Documentação</h5>
+                    <ul style="font-size: 0.85rem; color: var(--text-muted); line-height: 1.8; padding-left: 1.5rem;">
+                        <li><strong>Google (2024).</strong> <em>Meridian: A Bayesian Mixed Marketing Modeling (MMM) Framework</em>. Google Open Source Documentation.</li>
+                        <li><strong>Jin, Y., et al. (2017).</strong> <em>Bayesian Methods for Media Mix Modeling with Carryover and Shape Effects</em>. Google Research.</li>
+                        <li><strong>McElreath, R. (2020).</strong> <em>Statistical Rethinking: A Bayesian Course with Examples in R and Stan</em>. CRC Press.</li>
+                        <li><strong>Tellis, G. J. (2006).</strong> <em>Modeling Marketing Mix</em>. Handbook of Marketing Research.</li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+
+        <div id="simulador-outliers" class="article-detail glass" style="display:none; padding: 40px; margin-top: 2rem;">
+            <div class="detail-header" style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 2rem;">
+                <h3 style="font-family:'Space Grotesk'; font-size: 1.8rem;">A Ilusão da Média: Caçando Outliers</h3>
+                <button class="close-hub-btn" onclick="fecharHub('simulador-outliers')" style="background:none; border:none; color:var(--accent); font-size: 2.5rem; cursor:pointer;">&times;</button>
+            </div>
+            <div class="detail-content article-body">
+                <p style="color: var(--text-muted); font-size: 1.1rem; line-height: 1.8;">Durante a Análise Exploratória (AED) de dados financeiros, frequentemente nos deparamos com distribuições assimétricas, como o salário ou a <strong>renda declarada</strong> dos clientes. Nessas situações, confiar cegamente na "Média" pode levar a decisões de negócio imprecisas.</p>
+                <p style="color: var(--text-muted); font-size: 1.1rem; margin-bottom: 2rem; line-height: 1.8;">Teste você mesmo no laboratório abaixo: arraste a bolinha mais à direita (que representa o cliente com renda atípica) para a esquerda ou direita. Observe como a linha da <strong>Média</strong> enlouquece para acompanhá-lo, enquanto a <strong>Mediana</strong> permanece sólida no centro, descrevendo a verdadeira realidade da massa de clientes.</p>
+
+                <div style="background: rgba(0,0,0,0.2); padding: 2rem; border-radius: 8px; border: 1px solid var(--glass-border); text-align: center; user-select: none;">
+                    <h4 style="color: var(--text-main); margin-top: 0; margin-bottom: 1.5rem; text-transform: uppercase; font-size: 0.85rem; letter-spacing: 2px;"><i class="fas fa-hand-pointer"></i> Arraste os Pontos (Renda dos Clientes)</h4>
+                    
+                    <div style="display: flex; justify-content: space-around; margin-bottom: 2rem; flex-wrap: wrap; gap: 1rem;">
+                        <div style="background: rgba(255, 255, 255, 0.05); padding: 15px 30px; border-radius: 8px; border: 1px solid rgba(255,255,255,0.2); min-width: 200px;">
+                            <strong style="color: #ff6b6b; display:block; font-size: 0.9rem; text-transform: uppercase;">Média</strong> 
+                            <span id="sim-mean-val" style="color: var(--text-main); font-size: 1.5rem; font-family: 'Space Grotesk'; font-weight: bold;">R$ 0,00</span>
+                        </div>
+                        <div style="background: rgba(255, 255, 255, 0.05); padding: 15px 30px; border-radius: 8px; border: 1px solid rgba(255,255,255,0.2); min-width: 200px;">
+                            <strong style="color: #1dd1a1; display:block; font-size: 0.9rem; text-transform: uppercase;">Mediana</strong> 
+                            <span id="sim-median-val" style="color: var(--text-main); font-size: 1.5rem; font-family: 'Space Grotesk'; font-weight: bold;">R$ 0,00</span>
+                        </div>
+                    </div>
+
+                    <div id="sim-track" style="position: relative; width: 100%; height: 120px; margin-top: 3rem;">
+                        <div style="position: absolute; top: 50%; left: 0%; right: 0%; height: 2px; background: rgba(255,255,255,0.2); transform: translateY(-50%);"></div>
+                        <div id="sim-mean-line" style="position: absolute; top: 10%; bottom: 10%; width: 2px; background: #ff6b6b; transition: left 0.1s; z-index: 1;"></div>
+                        <div id="sim-median-line" style="position: absolute; top: 10%; bottom: 10%; width: 2px; background: #1dd1a1; transition: left 0.1s; z-index: 1;"></div>
+                        <div id="sim-mean-label" style="position: absolute; top: -20px; color: #ff6b6b; font-size: 0.8rem; transform: translateX(-50%); font-weight: bold; transition: left 0.1s;">Média</div>
+                        <div id="sim-median-label" style="position: absolute; bottom: -20px; color: #1dd1a1; font-size: 0.8rem; transform: translateX(-50%); font-weight: bold; transition: left 0.1s;">Mediana</div>
+                        <div id="sim-points-container" style="position: absolute; top: 0; left: 0%; right: 0%; bottom: 0; z-index: 10;"></div>
+                    </div>
+                    
+                    <div style="display: flex; justify-content: space-between; margin-top: 15px; color: var(--text-muted); font-size: 0.85rem; font-family: monospace;">
+                        <span>R$ 0</span>
+                        <span>R$ 20.000+</span>
+                    </div>
+                </div>
+                
+                <p style="color: var(--text-muted); margin-top: 2.5rem; border-left: 4px solid var(--accent); padding-left: 15px;"><strong>Conclusão Analítica:</strong> É por este exato motivo que, na nossa <em>Análise Exploratória da Tabela Clientes do Bank Twin</em>, observamos uma média de R$ 6.484,18 puxada fortemente por <em>outliers</em>, enquanto a mediana de R$ 3.498,51 revelava o verdadeiro centro de gravidade da distribuição de renda do banco.</p>
+            </div>
+        </div>
+
+    </div>
+</section>

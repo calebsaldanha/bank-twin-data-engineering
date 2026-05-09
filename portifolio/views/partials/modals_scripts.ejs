@@ -1,0 +1,275 @@
+<!-- Modal Eng -->
+<div class="modal-overlay" id="modal-eng">
+    <div class="modal-content glass" style="max-width: 1000px; padding: 3rem;">
+        <button class="close-modal-btn" onclick="document.getElementById('modal-eng').style.display='none'" style="float:right; background:none; border:none; color:var(--accent); font-size:2.5rem; cursor:pointer;">&times;</button>
+        <span class="tag" style="color:var(--accent); font-size:0.8rem; text-transform:uppercase; font-weight: 600; letter-spacing: 1px;">Data Engineering & Architecture</span>
+        <h2 style="margin: 1rem 0 2rem; font-family:'Space Grotesk'; font-size: 2.2rem;">Bank Digital Twin: Engine de Simulação</h2>
+        <div class="article-body">
+            <div style="background: rgba(224, 224, 224, 0.05); padding: 1.5rem; border-left: 4px solid var(--accent); border-radius: 4px; margin-bottom: 2.5rem;">
+                <h4 style="color: var(--accent); margin-top: 0; margin-bottom: 0.5rem;">Objetivo do Projeto</h4>
+                <p style="margin-bottom: 0; color: var(--text-muted); font-size: 0.95rem;">Construir um motor de simulação sintética de altíssima fidelidade para representar um ecossistema bancário digital ponta a ponta. A meta foi gerar um banco de dados volumoso (50k clientes, 1.1M+ transações) com integridade referencial absoluta e <strong>vieses causais embutidos</strong>, criando um <em>sandbox</em> realista para treinar modelos preditivos de Risco, Fraude e Inferência Causal (MTA).</p>
+            </div>
+            
+            <h4 style="color:var(--text-main); margin-bottom: 1rem; border-bottom: 1px solid var(--glass-border); padding-bottom: 0.5rem;">O Processo (Pipeline de Construção)</h4>
+            <ol style="color: var(--text-muted); padding-left: 1.5rem; margin-bottom: 2.5rem; line-height: 1.8;">
+                <li><strong>Modelagem Relacional:</strong> Design do schema no PostgreSQL mapeando 4 camadas lógicas (Identidade, Produtos, Crédito e Transacional).</li>
+                <li><strong>Geração Algorítmica (Python):</strong> Scripts parametrizados utilizando bibliotecas estatísticas (Numpy) para garantir distribuições não-uniformes. Exemplo: a <em>renda_declarada</em> segue uma distribuição LogNormal, impactando diretamente a probabilidade de aprovação de <em>limite_total</em> de cartão e o enquadramento de <em>taxa_juros_mes</em>.</li>
+                <li><strong>Orquestração de Dados:</strong> Ingestão massiva em lotes (batch inserts) utilizando <code>SQLAlchemy</code> e psycopg2, rodando contra um banco de dados containerizado via Docker Compose.</li>
+                <li><strong>Auditoria e Validação:</strong> Pipeline de Data Quality para garantir ausência de registros órfãos e lógica temporal estrita (ex: <code>data_pagamento >= data_vencimento</code> para calcular churn e atrasos reais).</li>
+            </ol>
+
+            <h4 style="color:var(--text-main); margin-bottom: 1rem; border-bottom: 1px solid var(--glass-border); padding-bottom: 0.5rem;">Arquitetura de Dados: Tabelas e Colunas</h4>
+            <p style="color: var(--text-muted); font-size: 0.9rem; margin-bottom: 1.5rem;">A base de dados é segmentada em 10 tabelas principais (schema <code>public</code>), totalizando 61 colunas correlacionadas:</p>
+
+            <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 2rem;">
+                <div style="background: rgba(0,0,0,0.3); padding: 1.5rem; border-radius: 8px; border: 1px solid var(--glass-border);">
+                    <h5 style="color: var(--accent); margin-bottom: 1rem; font-size: 1.1rem;">Layer 1: Fundação & Identidade</h5>
+                    <ul style="list-style: none; padding: 0; color: var(--text-muted); font-size: 0.85rem; line-height: 1.6;">
+                        <li style="margin-bottom: 15px;"><strong style="color: #fff;">clientes:</strong><br><span style="color: #888;">cliente_id, nome, cpf, data_nascimento, renda_declarada, segmento, behavior_score, data_cadastro</span></li>
+                        <li><strong style="color: #fff;">sessoes_dispositivos:</strong><br><span style="color: #888;">dispositivo_id, cliente_id, os, modelo_aparelho, data_primeiro_acesso</span></li>
+                    </ul>
+                </div>
+
+                <div style="background: rgba(0,0,0,0.3); padding: 1.5rem; border-radius: 8px; border: 1px solid var(--glass-border);">
+                    <h5 style="color: var(--accent); margin-bottom: 1rem; font-size: 1.1rem;">Layer 2: Produtos Bancários</h5>
+                    <ul style="list-style: none; padding: 0; color: var(--text-muted); font-size: 0.85rem; line-height: 1.6;">
+                        <li style="margin-bottom: 15px;"><strong style="color: #fff;">contas:</strong><br><span style="color: #888;">conta_id, cliente_id, tipo_conta, data_abertura, saldo_atual, status</span></li>
+                        <li style="margin-bottom: 15px;"><strong style="color: #fff;">cartoes:</strong><br><span style="color: #888;">cartao_id, conta_id, tipo_cartao, categoria, limite_total, limite_disponivel, status</span></li>
+                        <li><strong style="color: #fff;">investimentos_posicao:</strong><br><span style="color: #888;">investimento_id, cliente_id, tipo_ativo, valor_aplicado, valor_atual, perfil_risco</span></li>
+                    </ul>
+                </div>
+
+                <div style="background: rgba(0,0,0,0.3); padding: 1.5rem; border-radius: 8px; border: 1px solid var(--glass-border);">
+                    <h5 style="color: var(--accent); margin-bottom: 1rem; font-size: 1.1rem;">Layer 3: Operações de Crédito</h5>
+                    <ul style="list-style: none; padding: 0; color: var(--text-muted); font-size: 0.85rem; line-height: 1.6;">
+                        <li style="margin-bottom: 15px;"><strong style="color: #fff;">contratos_credito:</strong><br><span style="color: #888;">contrato_id, conta_id, tipo_produto, valor_contratado, taxa_juros_mes, data_contratacao</span></li>
+                        <li><strong style="color: #fff;">parcelas_credito:</strong><br><span style="color: #888;">parcela_id, contrato_id, numero_parcela, valor_parcela, data_vencimento, data_pagamento, status_pagamento</span></li>
+                    </ul>
+                </div>
+
+                <div style="background: rgba(0,0,0,0.3); padding: 1.5rem; border-radius: 8px; border: 1px solid var(--glass-border);">
+                    <h5 style="color: var(--accent); margin-bottom: 1rem; font-size: 1.1rem;">Layer 4: Fatos (Transações & Marketing)</h5>
+                    <ul style="list-style: none; padding: 0; color: var(--text-muted); font-size: 0.85rem; line-height: 1.6;">
+                        <li style="margin-bottom: 15px;"><strong style="color: #fff;">transacoes_cartao:</strong><br><span style="color: #888;">transacao_id, cartao_id, data_transacao, valor, estabelecimento, mcc_grupo, tipo_transacao</span></li>
+                        <li style="margin-bottom: 15px;"><strong style="color: #fff;">campanhas_marketing:</strong><br><span style="color: #888;">campanha_id, nome_campanha, objetivo, canal, custo_clique_estimado, data_inicio</span></li>
+                        <li><strong style="color: #fff;">eventos_app:</strong><br><span style="color: #888;">evento_id, dispositivo_id, cliente_id, campanha_id, sessao_id, tipo_evento, data_evento, metadados</span></li>
+                    </ul>
+                </div>
+            </div>
+
+            <div style="display: flex; gap: 10px; flex-wrap: wrap; margin-top: 3rem; justify-content: center;">
+                <span style="padding: 6px 15px; border: 1px solid var(--accent); color: var(--accent); border-radius: 20px; font-size: 0.85rem; font-weight: 600;">Python</span>
+                <span style="padding: 6px 15px; border: 1px solid var(--accent); color: var(--accent); border-radius: 20px; font-size: 0.85rem; font-weight: 600;">NumPy & Pandas</span>
+                <span style="padding: 6px 15px; border: 1px solid var(--accent); color: var(--accent); border-radius: 20px; font-size: 0.85rem; font-weight: 600;">PostgreSQL</span>
+                <span style="padding: 6px 15px; border: 1px solid var(--accent); color: var(--accent); border-radius: 20px; font-size: 0.85rem; font-weight: 600;">Docker</span>
+                <span style="padding: 6px 15px; border: 1px solid var(--accent); color: var(--accent); border-radius: 20px; font-size: 0.85rem; font-weight: 600;">SQLAlchemy</span>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- Modal Exo -->
+<div class="modal-overlay" id="modal-exo">
+    <div class="modal-content glass" style="max-width: 1000px; padding: 3rem;">
+        <button class="close-modal-btn" onclick="document.getElementById('modal-exo').style.display='none'" style="float:right; background:none; border:none; color:var(--accent); font-size:2.5rem; cursor:pointer;">&times;</button>
+        <span class="tag" style="color:var(--accent); font-size:0.8rem; text-transform:uppercase; font-weight: 600; letter-spacing: 1px;">Data Engineering & API Integration</span>
+        <h2 style="margin: 1rem 0 2rem; font-family:'Space Grotesk'; font-size: 2.2rem;">Pipeline Exógeno e Macroeconômico</h2>
+        <div class="article-body">
+            <div style="background: rgba(224, 224, 224, 0.05); padding: 1.5rem; border-left: 4px solid var(--accent); border-radius: 4px; margin-bottom: 2.5rem;">
+                <h4 style="color: var(--accent); margin-top: 0; margin-bottom: 0.5rem;">Objetivo do Projeto</h4>
+                <p style="margin-bottom: 0; color: var(--text-muted); font-size: 0.95rem;">Automatizar a extração e o tratamento de indicadores econômicos oficiais e dados de calendário para isolar sazonalidades em modelos preditivos. Este pipeline alimenta o schema <code>exogenas</code>, fornecendo o "cenário externo" necessário para estudos de Inferência Causal, Contrafactuais e Credit Scoring dinâmico.</p>
+            </div>
+            
+            <h4 style="color:var(--text-main); margin-bottom: 1rem; border-bottom: 1px solid var(--glass-border); padding-bottom: 0.5rem;">O Processo (Pipeline ETL)</h4>
+            <ol style="color: var(--text-muted); padding-left: 1.5rem; margin-bottom: 2.5rem; line-height: 1.8;">
+                <li><strong>Extração (Extract):</strong> Consumo de APIs governamentais abertas. Uso do SGS (Sistema Gerenciador de Séries Temporais) do Banco Central para IPCA e Selic; API Olinda (PTAX) para cotação cambial do Dólar; e Brasil API para mapeamento do calendário de Feriados Nacionais.</li>
+                <li><strong>Transformação (Transform):</strong> Limpeza, formatação e normalização temporal utilizando Python e <code>Pandas</code>. Alinhamento de granularidades temporais distintas (diária para Selic/PTAX, mensal extrapolada para IPCA) para garantir consistência algorítmica.</li>
+                <li><strong>Carga (Load):</strong> Ingestão no banco de dados analítico <code>central_data_hub</code> (PostgreSQL) usando <code>SQLAlchemy</code>, atualizando o schema <code>exogenas</code> de forma idempotente, sem duplicar registros históricos existentes.</li>
+            </ol>
+
+            <h4 style="color:var(--text-main); margin-bottom: 1rem; border-bottom: 1px solid var(--glass-border); padding-bottom: 0.5rem;">Arquitetura de Dados: Schema Exógenas</h4>
+            <p style="color: var(--text-muted); font-size: 0.9rem; margin-bottom: 1.5rem;">Os dados são armazenados de forma desacoplada no schema <code>exogenas</code> para fácil cruzamento (JOIN) com os dados transacionais e de marketing:</p>
+
+            <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 2rem;">
+                <div style="background: rgba(0,0,0,0.3); padding: 1.5rem; border-radius: 8px; border: 1px solid var(--glass-border);">
+                    <h5 style="color: var(--accent); margin-bottom: 1rem; font-size: 1.1rem;">Indicadores Macroeconômicos</h5>
+                    <ul style="list-style: none; padding: 0; color: var(--text-muted); font-size: 0.85rem; line-height: 1.6;">
+                        <li style="margin-bottom: 15px;"><strong style="color: #fff;">macroeconomia:</strong><br><span style="color: #888;">data (PK), selic_meta, selic_diaria, ipca_mensal, ipca_acumulado, usd_ptax_compra, usd_ptax_venda</span></li>
+                    </ul>
+                </div>
+
+                <div style="background: rgba(0,0,0,0.3); padding: 1.5rem; border-radius: 8px; border: 1px solid var(--glass-border);">
+                    <h5 style="color: var(--accent); margin-bottom: 1rem; font-size: 1.1rem;">Calendário e Sazonalidade</h5>
+                    <ul style="list-style: none; padding: 0; color: var(--text-muted); font-size: 0.85rem; line-height: 1.6;">
+                        <li style="margin-bottom: 15px;"><strong style="color: #fff;">feriados:</strong><br><span style="color: #888;">data (PK), nome, tipo (nacional, estadual, municipal)</span></li>
+                    </ul>
+                </div>
+            </div>
+
+            <div style="display: flex; gap: 10px; flex-wrap: wrap; margin-top: 3rem; justify-content: center;">
+                <span style="padding: 6px 15px; border: 1px solid var(--accent); color: var(--accent); border-radius: 20px; font-size: 0.85rem; font-weight: 600;">Python</span>
+                <span style="padding: 6px 15px; border: 1px solid var(--accent); color: var(--accent); border-radius: 20px; font-size: 0.85rem; font-weight: 600;">Pandas</span>
+                <span style="padding: 6px 15px; border: 1px solid var(--accent); color: var(--accent); border-radius: 20px; font-size: 0.85rem; font-weight: 600;">APIs REST</span>
+                <span style="padding: 6px 15px; border: 1px solid var(--accent); color: var(--accent); border-radius: 20px; font-size: 0.85rem; font-weight: 600;">PostgreSQL</span>
+                <span style="padding: 6px 15px; border: 1px solid var(--accent); color: var(--accent); border-radius: 20px; font-size: 0.85rem; font-weight: 600;">Docker</span>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- Modal Notebooks -->
+<div class="modal-overlay" id="modal-notebook">
+    <div class="modal-content glass" style="max-width: 1200px; width: 95%; height: 90vh; padding: 1.5rem; display: flex; flex-direction: column;">
+        <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 1rem; border-bottom: 1px solid var(--glass-border); padding-bottom: 10px;">
+            <h3 id="notebook-title" style="font-family:'Space Grotesk'; font-size: 1.5rem; color: var(--text-main);">Notebook</h3>
+            <button class="close-modal-btn" onclick="fecharModalNotebook()" style="background:none; border:none; color:var(--accent); font-size:2.5rem; cursor:pointer; line-height: 1;">&times;</button>
+        </div>
+        <iframe id="notebook-frame" src="" style="width: 100%; flex-grow: 1; border: none; border-radius: 8px; background: #fff;"></iframe>
+    </div>
+</div>
+
+<script>
+    function toggleTasks(targetId, iconId) {
+        const tasksDiv = document.getElementById(targetId);
+        const icon = document.getElementById(iconId);
+        if (tasksDiv.style.display === 'none' || tasksDiv.style.display === '') {
+            tasksDiv.style.display = 'block';
+            icon.classList.remove('fa-chevron-down');
+            icon.classList.add('fa-chevron-up');
+        } else {
+            tasksDiv.style.display = 'none';
+            icon.classList.remove('fa-chevron-up');
+            icon.classList.add('fa-chevron-down');
+        }
+    }
+    
+    function abrirModalNotebook(caminhoArquivo, titulo) {
+        if (!caminhoArquivo) return;
+        document.getElementById('notebook-title').innerText = "AED: " + titulo;
+        document.getElementById('notebook-frame').src = caminhoArquivo;
+        document.getElementById('modal-notebook').style.display = 'flex';
+    }
+
+    function fecharModalNotebook() {
+        document.getElementById('modal-notebook').style.display = 'none';
+        document.getElementById('notebook-frame').src = "";
+        let selects = document.querySelectorAll('.notebook-select');
+        selects.forEach(s => s.selectedIndex = 0);
+    }
+
+    function abrirHub(id) {
+        document.querySelectorAll('#hub .article-detail').forEach(el => el.style.display = 'none');
+        const target = document.getElementById(id);
+        if(target) {
+            target.style.display = 'block';
+            target.scrollIntoView({ behavior: 'smooth', block: 'start' });
+            
+            if(id === 'simulador-outliers' && !window.simLoaded) {
+                initSimulator();
+                window.simLoaded = true;
+            }
+        }
+    }
+
+    function fecharHub(id) {
+        document.getElementById(id).style.display = 'none';
+    }
+
+    function initSimulator() {
+        const simValues = [2000, 3000, 4000, 5000, 18000]; 
+        const simMax = 20000;
+        const simContainer = document.getElementById('sim-points-container');
+        
+        function updateSim() {
+            let sorted = [...simValues].sort((a,b) => a - b);
+            const sum = sorted.reduce((a,b) => a + b, 0);
+            const mean = sum / sorted.length;
+            const median = sorted[Math.floor(sorted.length / 2)];
+            
+            document.getElementById('sim-mean-val').innerText = mean.toLocaleString('pt-BR', {style: 'currency', currency: 'BRL'});
+            document.getElementById('sim-median-val').innerText = median.toLocaleString('pt-BR', {style: 'currency', currency: 'BRL'});
+            
+            const meanPct = (mean / simMax) * 100;
+            const medianPct = (median / simMax) * 100;
+            
+            document.getElementById('sim-mean-line').style.left = `${meanPct}%`;
+            document.getElementById('sim-mean-label').style.left = `${meanPct}%`;
+            
+            document.getElementById('sim-median-line').style.left = `${medianPct}%`;
+            document.getElementById('sim-median-label').style.left = `${medianPct}%`;
+        }
+
+        simContainer.innerHTML = '';
+        simValues.forEach((val, index) => {
+            const pt = document.createElement('div');
+            pt.style.position = 'absolute';
+            pt.style.width = '28px';
+            pt.style.height = '28px';
+            pt.style.background = 'var(--accent)'; 
+            pt.style.borderRadius = '50%';
+            pt.style.top = '50%';
+            pt.style.transform = 'translate(-50%, -50%)';
+            pt.style.cursor = 'grab';
+            pt.style.border = '3px solid rgba(255,255,255,0.7)';
+            pt.style.left = `${(val / simMax) * 100}%`;
+            pt.style.touchAction = 'none'; // Evita zoom no mobile
+            
+            const ptLabel = document.createElement('div');
+            ptLabel.style.position = 'absolute';
+            ptLabel.style.top = '-30px';
+            ptLabel.style.left = '50%';
+            ptLabel.style.transform = 'translateX(-50%)';
+            ptLabel.style.fontSize = '12px';
+            ptLabel.style.color = 'var(--text-muted)';
+            ptLabel.style.pointerEvents = 'none';
+            pt.appendChild(ptLabel);
+
+            let isDragging = false;
+            
+            const onDrag = (clientX) => {
+                const rect = simContainer.getBoundingClientRect();
+                let x = clientX - rect.left;
+                let newPct = (x / rect.width) * 100;
+                newPct = Math.max(0, Math.min(100, newPct));
+                pt.style.left = `${newPct}%`;
+                
+                let newVal = (newPct / 100) * simMax;
+                simValues[index] = newVal;
+                ptLabel.innerText = Math.round(newVal/1000) + 'k';
+                updateSim();
+            };
+
+            const startDrag = () => { 
+                isDragging = true; 
+                pt.style.cursor = 'grabbing'; 
+                ptLabel.innerText = Math.round(simValues[index]/1000) + 'k'; 
+            };
+            
+            const stopDrag = () => { 
+                isDragging = false; 
+                pt.style.cursor = 'grab'; 
+                ptLabel.innerText = ''; 
+            };
+
+            // Eventos de Mouse (Desktop)
+            pt.addEventListener('mousedown', startDrag);
+            window.addEventListener('mousemove', (e) => { if(isDragging) onDrag(e.clientX); });
+            window.addEventListener('mouseup', stopDrag);
+
+            // Eventos de Toque (Mobile)
+            pt.addEventListener('touchstart', (e) => { startDrag(); }, {passive: true});
+            window.addEventListener('touchmove', (e) => { 
+                if(isDragging) {
+                    onDrag(e.touches[0].clientX); 
+                    if (e.cancelable) e.preventDefault(); // Impede rolagem da tela
+                }
+            }, {passive: false});
+            window.addEventListener('touchend', stopDrag);
+
+            simContainer.appendChild(pt);
+        });
+        
+        updateSim();
+    }
+</script>
+<script src="assets/js/script.js?v=2"></script>

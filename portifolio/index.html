@@ -3,139 +3,732 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Caleb Saldanha | Data Scientist</title>
+    <title>Caleb Saldanha | Portfólio</title>
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600&family=Space+Grotesk:wght@500;700&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="assets/css/style.css">
-    <script src="https://kit.fontawesome.com/a076d05399.js" crossorigin="anonymous"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <script>
+    window.MathJax = { tex: { inlineMath: [['$', '$'], ['\\(', '\\)']], displayMath: [['$$', '$$'], ['\\[', '\\]']], processEscapes: true } };
+    </script>
+    <script id="MathJax-script" async src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-chtml.js"></script>
 </head>
+
 <body>
     <header>
-        <nav class="container">
-            <div class="logo">CS<span>.</span></div>
-            <ul class="nav-links">
-                <li><a href="#about">Sobre</a></li>
-                <li><a href="#projects">Projetos</a></li>
-                <li><a href="#articles">Artigos</a></li>
-                <li><a href="#contact">Contato</a></li>
-            </ul>
-            <div class="menu-toggle" id="mobile-menu">
-                <span class="bar"></span>
-                <span class="bar"></span>
-            </div>
-        </nav>
-    </header>
+    <nav class="container" style="display:flex; justify-content:space-between; align-items:center; padding: 1.5rem 0;">
+        <div class="logo" style="font-family:'Space Grotesk'; font-weight:bold; font-size:1.5rem;">CS<span style="color:var(--accent);">.</span></div>
+        <ul class="nav-links" style="display:flex; gap:2rem; list-style:none;">
+            <li><a href="#about">Sobre</a></li>
+            <li><a href="#projects">Projetos</a></li>
+            <li><a href="#hub">Hub</a></li>
+            <li><a href="#catalog">Catálogo</a></li>
+            <li><a href="#contact">Contato</a></li>
+        </ul>
+    </nav>
+</header>
 
     <main>
         <section class="hero">
-            <div class="container">
-                <h1 class="glitch-text">Caleb Saldanha</h1>
-                <h3 class="role-title">Data Scientist | Machine Learning</h3>
-                <p class="hero-desc">Transformando dados complexos em decisões estratégicas através de modelagem estatística e inferência causal.</p>
-                <div class="hero-btns">
-                    <a href="#projects" class="btn">Explorar Projetos</a>
-                    <a href="#contact" class="btn btn-outline">Contato</a>
+    <div class="container" style="text-align:center;">
+        <h1 class="glitch-text" style="font-family:'Space Grotesk'; font-size:4rem; margin-bottom:1rem;">Caleb Saldanha</h1>
+        <h3 class="role-title" style="color:var(--accent); text-transform:uppercase; letter-spacing:4px;">Data Scientist | Machine Learning</h3>
+        <p style="color:var(--text-muted); max-width:600px; margin:2rem auto;">Desenvolvimento de modelos estatísticos e inteligência analítica aplicada à tomada de decisão estratégica.</p>
+    </div>
+</section>
+<section id="about">
+    <div class="container">
+        <h2 class="section-title">Sobre Mim</h2>
+        <div class="glass" style="display:grid; grid-template-columns: 300px 1fr; gap:3rem; align-items:center;">
+            <img src="assets/img/PERFIL_5(5).jpeg" alt="Perfil" style="width:100%; border-radius:8px;">
+            <div>
+                <p style="font-size: 1.1rem; line-height: 1.8;">Analista de Modelagem no Bradesco, com forte atuação em <strong>Data Science e Machine Learning</strong>. Minha especialidade é a construção de modelos preditivos, inferência causal e soluções estatísticas aplicadas a Marketing Analytics e Risco, transformando dados complexos em inteligência estratégica para o negócio.</p>
+            </div>
+        </div>
+    </div>
+</section>
+
+        <section id="projects">
+    <div class="container">
+        <h2 class="section-title">Projetos e Modelagem</h2>
+        
+        <div class="card glass project-master-card" onclick="toggleTasks('tasks-bank', 'icon-bank')" style="cursor: pointer; border: 1px solid var(--accent); transition: all 0.3s ease;">
+            <div style="display: flex; justify-content: space-between; align-items: flex-start;">
+                <div>
+                    <span class="tag" style="color:var(--accent); font-size:0.8rem; text-transform:uppercase; font-weight: bold;">Ecosystem Engine</span>
+                    <h3 style="margin: 1rem 0; font-size: 1.8rem; font-family: 'Space Grotesk';">Bank Digital Twin</h3>
+                    <p style="color: var(--text-muted); max-width: 800px;">Uma base de dados sintética de altíssima fidelidade, modelada do zero. Contém 50.000 clientes e 1.1M+ de transações correlacionadas, servindo como fundação para testes avançados de Machine Learning em Risco, Fraude e Marketing.</p>
+                </div>
+                <div style="color: var(--accent); font-size: 2rem;">
+                    <i id="icon-bank" class="fas fa-chevron-down"></i>
                 </div>
             </div>
-        </section>
+            <p style="margin-top: 1rem; font-size: 0.85rem; color: var(--accent);">Clique para expandir as Verticais Analíticas</p>
+        </div>
 
-        <section id="about" class="about">
-            <div class="container">
-                <h2 class="section-title">Sobre Mim</h2>
-                <div class="about-grid">
-                    <div class="about-text glass">
-                        <p>Analista no Bradesco com foco em marketing data, unindo rigor acadêmico em Ciência da Computação e Ciência de Dados à visão estratégica de negócio.</p>
-                        <div class="skills-grid">
-                            <span class="skill-tag">Python</span>
-                            <span class="skill-tag">SQL</span>
-                            <span class="skill-tag">Machine Learning</span>
-                            <span class="skill-tag">Causal Inference</span>
-                            <span class="skill-tag">Power Platform</span>
+        <div id="tasks-bank" style="display: none; margin-top: 3rem; margin-bottom: 4rem;">
+            <h3 style="margin-bottom: 2rem; font-family: 'Space Grotesk'; border-bottom: 1px solid var(--glass-border); padding-bottom: 10px;">Verticais de Análise e Modelagem</h3>
+            <div class="grid">
+                <div class="card glass task-card">
+                    <span style="font-size: 0.75rem; color: var(--accent); text-transform: uppercase; letter-spacing: 1px;">Data Engineering</span>
+                    <h4 style="margin: 0.5rem 0 1rem; color: var(--text-main);">Pipeline & Arquitetura</h4>
+                    <p style="color: var(--text-muted); font-size: 0.9rem; margin-bottom: 1.5rem;">Desenvolvimento do motor de simulação, ingestão em 4 camadas e orquestração da infraestrutura (Docker/PostgreSQL).</p>
+                    <div style="display: flex; gap: 1rem; align-items: center;">
+                        <button class="btn open-modal-btn" data-modal="modal-eng" style="padding: 8px 15px; font-size: 0.85rem;" onclick="document.getElementById('modal-eng').style.display='flex'">Detalhes Técnicos</button>
+                        <a href="https://github.com/calebsaldanha/bank-twin-data-engineering" target="_blank" style="font-size: 0.9rem; color: var(--text-muted);"><i class="fab fa-github"></i> Repositório Público</a>
+                    </div>
+                </div>
+                <div class="card glass task-card" style="display: flex; flex-direction: column;">
+                    <span style="font-size: 0.75rem; color: var(--accent); text-transform: uppercase; letter-spacing: 1px;">Analytics</span>
+                    <h4 style="margin: 0.5rem 0 1rem; color: var(--text-main);">Análise Exploratória (AED)</h4>
+                    <p style="color: var(--text-muted); font-size: 0.9rem; margin-bottom: auto;">Auditoria das distribuições estatísticas (LogNormal), análise de safras e verificação de vieses causais inseridos na base.</p>
+                    <div style="margin-top: 1.5rem; border-top: 1px solid rgba(255,255,255,0.1); padding-top: 1rem;">
+                        <label style="font-size: 0.75rem; color: var(--accent); text-transform: uppercase; letter-spacing: 1px; display: block; margin-bottom: 8px;"><i class="fas fa-desktop"></i> Ver Notebooks (AED)</label>
+                        <select class="notebook-select" onchange="abrirModalNotebook(this.value, this.options[this.selectedIndex].text)" style="width: 100%; padding: 8px; background: rgba(0,0,0,0.3); color: #fff; border: 1px solid rgba(255,255,255,0.2); border-radius: 6px; cursor: pointer; outline: none;">
+                            <option value="" disabled selected>Selecione uma tabela...</option>
+                            <option value="projetos/bank-digital-twin/aed/eda_clientes.html">public.clientes</option>
+                        </select>
+                    </div>
+                </div>
+                <div class="card glass task-card">
+                    <span style="font-size: 0.75rem; color: var(--text-muted); text-transform: uppercase; letter-spacing: 1px;">Machine Learning</span>
+                    <h4 style="margin: 0.5rem 0 1rem; color: var(--text-main);">Modelagem de Risco (Credit Scoring)</h4>
+                    <p style="color: var(--text-muted); font-size: 0.9rem; margin-bottom: 1.5rem;">Previsão de inadimplência (PD - Probability of Default) em contratos imobiliários e auto, analisando aging de parcelas.</p>
+                    <span style="font-size: 0.85rem; color: #555; font-style: italic;"><i class="fas fa-tools"></i> Em desenvolvimento</span>
+                </div>
+                <div class="card glass task-card">
+                    <span style="font-size: 0.75rem; color: var(--text-muted); text-transform: uppercase; letter-spacing: 1px;">Machine Learning</span>
+                    <h4 style="margin: 0.5rem 0 1rem; color: var(--text-main);">Detecção de Fraudes</h4>
+                    <p style="color: var(--text-muted); font-size: 0.9rem; margin-bottom: 1.5rem;">Implementação de algoritmos de detecção de anomalias (Isolation Forest) no fluxo de transações de cartão de crédito.</p>
+                    <span style="font-size: 0.85rem; color: #555; font-style: italic;"><i class="fas fa-tools"></i> Em planejamento</span>
+                </div>
+                <div class="card glass task-card">
+                    <span style="font-size: 0.75rem; color: var(--text-muted); text-transform: uppercase; letter-spacing: 1px;">Unsupervised ML</span>
+                    <h4 style="margin: 0.5rem 0 1rem; color: var(--text-main);">Clusterização de Clientes</h4>
+                    <p style="color: var(--text-muted); font-size: 0.9rem; margin-bottom: 1.5rem;">Agrupamento comportamental baseado em consumo (K-Means/GMM) para descobrir personas transacionais não óbvias.</p>
+                    <span style="font-size: 0.85rem; color: #555; font-style: italic;"><i class="fas fa-tools"></i> Em planejamento</span>
+                </div>
+                <div class="card glass task-card">
+                    <span style="font-size: 0.75rem; color: var(--text-muted); text-transform: uppercase; letter-spacing: 1px;">Customer Lifecycle</span>
+                    <h4 style="margin: 0.5rem 0 1rem; color: var(--text-main);">Análise de Churn e LTV</h4>
+                    <p style="color: var(--text-muted); font-size: 0.9rem; margin-bottom: 1.5rem;">Previsão de cancelamento de contas e cálculo do Customer Lifetime Value utilizando modelagem de sobrevida (Survival Analysis).</p>
+                    <span style="font-size: 0.85rem; color: #555; font-style: italic;"><i class="fas fa-tools"></i> Em planejamento</span>
+                </div>
+                <div class="card glass task-card">
+                    <span style="font-size: 0.75rem; color: var(--text-muted); text-transform: uppercase; letter-spacing: 1px;">Marketing Data</span>
+                    <h4 style="margin: 0.5rem 0 1rem; color: var(--text-main);">Avaliação de Campanhas (ROI/ROAS)</h4>
+                    <p style="color: var(--text-muted); font-size: 0.9rem; margin-bottom: 1.5rem;">Mapeamento financeiro dos canais de aquisição para calcular o retorno sobre o investimento em mídia digital.</p>
+                    <span style="font-size: 0.85rem; color: #555; font-style: italic;"><i class="fas fa-tools"></i> Em planejamento</span>
+                </div>
+                <div class="card glass task-card">
+                    <span style="font-size: 0.75rem; color: var(--text-muted); text-transform: uppercase; letter-spacing: 1px;">Causal Inference</span>
+                    <h4 style="margin: 0.5rem 0 1rem; color: var(--text-main);">Multi-Touch Attribution (MTA)</h4>
+                    <p style="color: var(--text-muted); font-size: 0.9rem; margin-bottom: 1.5rem;">Uso do rastreamento multi-click (logs de telemetria e device_id) para modelagem avançada de atribuição algorítmica.</p>
+                    <span style="font-size: 0.85rem; color: #555; font-style: italic;"><i class="fas fa-tools"></i> Em planejamento</span>
+                </div>
+            </div>
+        </div>
+
+        <div class="card glass project-master-card" onclick="toggleTasks('tasks-exo', 'icon-exo')" style="cursor: pointer; border: 1px solid var(--accent); transition: all 0.3s ease; margin-top: 1rem;">
+            <div style="display: flex; justify-content: space-between; align-items: flex-start;">
+                <div>
+                    <span class="tag" style="color:var(--accent); font-size:0.8rem; text-transform:uppercase; font-weight: bold;">Data Engineering & APIs</span>
+                    <h3 style="margin: 1rem 0; font-size: 1.8rem; font-family: 'Space Grotesk';">Macroeconomic & Exogenous Pipeline</h3>
+                    <p style="color: var(--text-muted); max-width: 800px;">Desenvolvimento de um pipeline automatizado para extração, tratamento e armazenamento de dados macroeconômicos (Selic, IPCA, IBC-Br), calendário de feriados e tendências de mercado via APIs públicas. Base externa fundamental para isolar sazonalidades em modelos de Inferência Causal e Risco.</p>
+                </div>
+                <div style="color: var(--accent); font-size: 2rem;">
+                    <i id="icon-exo" class="fas fa-chevron-down"></i>
+                </div>
+            </div>
+            <p style="margin-top: 1rem; font-size: 0.85rem; color: var(--accent);">Clique para expandir o Projeto</p>
+        </div>
+
+        <div id="tasks-exo" style="display: none; margin-top: 3rem;">
+            <div class="grid" style="grid-template-columns: 1fr;">
+                <div class="card glass task-card" style="padding: 2rem;">
+                    <span style="font-size: 0.75rem; color: var(--accent); text-transform: uppercase; letter-spacing: 1px;">End-to-End ETL</span>
+                    <h4 style="margin: 0.5rem 0 1rem; color: var(--text-main); font-size: 1.4rem;">Pipeline Automatizado de Ingestão Exógena</h4>
+                    <p style="color: var(--text-muted); font-size: 1rem; margin-bottom: 1.5rem;">
+                        Processo abrangente de engenharia de dados focado na captura de indicadores oficiais. O pipeline consulta as APIs do Banco Central (SGS e Olinda) para <strong>Selic, IPCA e PTAX</strong>, além de integrar o calendário de feriados nacionais via Brasil API. Os dados são transformados e armazenados no schema <code>exogenas</code> para servir como base de suporte em modelos estatísticos e análises de incrementabilidade de marketing (MMM).
+                    </p>
+                    <div style="display: flex; gap: 1.5rem; align-items: center; border-top: 1px solid var(--glass-border); padding-top: 1.5rem;">
+                        <button class="btn open-modal-btn" data-modal="modal-exo" style="padding: 8px 15px; font-size: 0.85rem;" onclick="document.getElementById('modal-exo').style.display='flex'">Detalhes Técnicos</button>
+                        <a href="https://github.com/calebsaldanha/exogenous-data-pipeline" target="_blank" style="font-size: 0.95rem; color: var(--text-muted); text-decoration: none;"><i class="fab fa-github"></i> Ver Repositório Público</a>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+    </div>
+</section>
+
+        <section id="hub">
+    <div class="container">
+        <h2 class="section-title">Hub de Conhecimento</h2>
+        
+        <div class="articles-grid">
+            <div class="article-card glass" onclick="abrirHub('artigo-mmm')" style="cursor: pointer;">
+                <div class="article-content">
+                    <div class="article-meta" style="margin-bottom: 1rem; font-size: 0.8rem; color: var(--text-muted);">
+                        <span class="article-category">Data Science / Econometria</span> | <span class="article-date">Dez 2025</span>
+                    </div>
+                    <h3 style="margin: 1rem 0;">Meridian: Uma Abordagem Bayesiana para MMM</h3>
+                    <p style="color: var(--text-muted);">Uma reconstrução teórica da arquitetura matemática do framework do Google, abordando Adstock Geométrico e Saturação Hill.</p>
+                    <span style="color: var(--accent); font-weight:bold; margin-top: 1rem; display: inline-block;">Ler Artigo <i class="fas fa-arrow-right"></i></span>
+                </div>
+            </div>
+
+            <div class="article-card glass" onclick="abrirHub('simulador-outliers')" style="cursor: pointer;">
+                <div class="article-content">
+                    <div class="article-meta" style="margin-bottom: 1rem; font-size: 0.8rem; color: var(--text-muted);">
+                        <span class="article-category" style="color: var(--accent);">Sandbox Interativo</span> | <span class="article-date">Maio 2026</span>
+                    </div>
+                    <h3 style="margin: 1rem 0;">Média vs Mediana: A Ilusão dos Outliers</h3>
+                    <p style="color: var(--text-muted);">Entenda visualmente por que a média estatística pode mascarar a realidade financeira do seu negócio quando existem clientes com rendas extremas.</p>
+                    <span style="color: var(--accent); font-weight:bold; margin-top: 1rem; display: inline-block;">Abrir Simulador <i class="fas fa-play"></i></span>
+                </div>
+            </div>
+        </div>
+
+        <div id="artigo-mmm" class="article-detail glass" style="display:none; padding: 40px; margin-top: 2rem;">
+            <div class="detail-header" style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 2rem;">
+                <h3 style="font-family:'Space Grotesk'; font-size: 1.8rem;">Meridian: Framework MMM Bayesiano</h3>
+                <button class="close-hub-btn" onclick="fecharHub('artigo-mmm')" style="background:none; border:none; color:var(--accent); font-size: 2.5rem; cursor:pointer;">&times;</button>
+            </div>
+            <div class="detail-content article-body">
+                <div class="article-note" style="background: rgba(255,255,255,0.05); padding: 20px; border-left: 4px solid var(--accent); margin-bottom: 30px; border-radius: 4px;">
+                    <p style="margin-bottom: 10px; color: var(--accent);"><strong>Nota Técnica e Contextualização:</strong></p>
+                    <p style="font-style: italic; font-size: 0.95rem; color: var(--text-muted);">
+                        Este artigo apresenta uma <strong>análise independente e uma reconstrução teórica</strong> da arquitetura matemática do framework "Meridian", baseada exclusivamente na documentação técnica de código aberto (Open Source) e em papers acadêmicos publicados pela equipe de pesquisa do Google.
+                    </p>
+                    <p style="font-style: italic; font-size: 0.95rem; color: var(--text-muted); margin-bottom: 0;">
+                        O objetivo deste estudo é demonstrar a aplicação prática de conceitos avançados de estatística Bayesiana e modelagem hierárquica na resolução de problemas modernos de mensuração de marketing. O autor não possui vínculo com o desenvolvimento proprietário da ferramenta, servindo este texto como material educativo e de análise de engenharia reversa conceitual.
+                    </p>
+                </div>
+
+                <h4 style="margin-top: 2rem; color: var(--accent);">Resumo</h4>
+                <p style="color: var(--text-muted);">Este artigo apresenta a estrutura teórica e matemática do Meridian, o <em>framework</em> de Marketing Mix Modeling (MMM) desenvolvido pelo Google. Em contraste com modelos determinísticos ou baseados em cookies, o Meridian utiliza regressão Bayesiana Hierárquica em nível geográfico para inferir causalidade em dados agregados. O modelo incorpora funções de transformação de mídia (Adstock Geométrico e Saturação Hill), priors informativos para calibração via experimentos de incrementalidade e quantificação de incerteza através de amostragem MCMC (<em>Markov Chain Monte Carlo</em>). Discutimos as equações fundamentais, a parametrização dos efeitos de mídia e a otimização orçamentária sob retornos decrescentes.</p>
+
+                <h4 style="margin-top: 2rem; color: var(--accent);">1. Introdução</h4>
+                <p style="color: var(--text-muted);">Com a depreciação de identificadores de terceiros e o aumento das restrições de privacidade (GDPR, ATT), a atribuição granular (MTA) perde precisão. O Marketing Mix Modeling (MMM) ressurge como a metodologia padrão para mensuração de eficácia de mídia, pois utiliza dados agregados e não requer rastreamento individual.</p>
+                <p style="color: var(--text-muted);">O <strong>Modelo Meridian</strong> inova ao propor uma arquitetura que resolve as limitações clássicas do MMM (colinearidade, falta de causalidade) através de dois pilares:</p>
+                <ul style="color: var(--text-muted); padding-left: 1.5rem;">
+                    <li><strong>Modelagem Geo-Level:</strong> Uso de dados seccionados por geografia (ex: Estados, DMAs) para aumentar o tamanho da amostra e variância do sinal.</li>
+                    <li><strong>Inferência Bayesiana:</strong> Incorporação de conhecimento prévio (Priors) derivados de experimentos de incrementalidade para restringir o espaço de soluções.</li>
+                </ul>
+
+                <h4 style="margin-top: 2rem; color: var(--accent);">2. Especificação do Modelo</h4>
+                <p style="color: var(--text-muted);">O Meridian é formulado como um modelo de regressão aditiva, onde a variável resposta (KPI) é decomposta em tendência, sazonalidade, efeitos de mídia e variáveis de controle.</p>
+
+                <h5 style="margin-top: 1rem; color: var(--text-main);">2.1 Equação Geral do Modelo</h5>
+                <p style="color: var(--text-muted);">Seja $Y_{g,t}$ o KPI de interesse (vendas, conversões) na geografia $g$ e tempo $t$. O modelo é definido como:</p>
+                
+                <p style="text-align: center; margin: 2rem 0; color: var(--text-main); font-size: 1.1rem; overflow-x: auto;">
+                $$Y_{g,t} = \underbrace{\tau_{g,t}}_{\text{Tendência}} + \underbrace{\sum_{m=1}^{M} \beta_{g,m} \cdot f_m(x_{g,t,m})}_{\text{Efeitos de Mídia}} + \underbrace{\sum_{c=1}^{C} \gamma_{g,c} \cdot z_{g,t,c}}_{\text{Variáveis de Controle}} + \epsilon_{g,t}$$
+                </p>
+
+                <p style="color: var(--text-muted);">Onde:</p>
+                <ul style="color: var(--text-muted); padding-left: 1.5rem;">
+                    <li>$\tau_{g,t}$: Componente de tendência e sazonalidade.</li>
+                    <li>$x_{g,t,m}$: Execução de mídia bruta (impressões, gasto) do canal $m$.</li>
+                    <li>$f_m(\cdot)$: Função de transformação não-linear (Adstock e Saturação).</li>
+                    <li>$z_{g,t,c}$: Variáveis de controle (preço, competidores, feriados).</li>
+                    <li>$\epsilon_{g,t}$: Termo de erro, tipicamente $\epsilon_{g,t} \sim \text{Normal}(0, \sigma^2)$.</li>
+                </ul>
+
+                <h4 style="margin-top: 2rem; color: var(--accent);">3. Transformação de Variáveis de Mídia</h4>
+                <p style="color: var(--text-muted);">O Meridian modela a "física" da publicidade: o efeito de um anúncio não é instantâneo nem linear.</p>
+
+                <h5 style="margin-top: 1rem; color: var(--text-main);">3.1 Efeito de Defasagem (Adstock)</h5>
+                <p style="color: var(--text-muted);">O conceito de Adstock captura o efeito residual da publicidade ao longo do tempo (memória do consumidor). O Meridian utiliza, primariamente, o <strong>Adstock Geométrico</strong>.</p>
+                <p style="color: var(--text-muted);">Seja $x_{t}$ o investimento no tempo $t$, o estoque de mídia acumulado $A_t$ é:</p>
+                
+                <p style="text-align: center; margin: 1.5rem 0; color: var(--text-main); font-size: 1.1rem; overflow-x: auto; max-width: 100%; padding-bottom: 0.5rem;">
+                $$A(x_{t}, \alpha) = x_{t} + \alpha \cdot A(x_{t-1}, \alpha)$$
+                </p>
+                
+                <ul style="color: var(--text-muted); padding-left: 1.5rem;">
+                    <li><strong>$\alpha$ (Taxa de Decaimento):</strong> Parâmetro entre $0$ e $1$. Se $\alpha = 0.8$, 80% do efeito do anúncio persiste na semana seguinte.</li>
+                    <li>No modelo Bayesiano, $\alpha$ é tratado como uma variável aleatória com uma distribuição <em>Beta</em> como prior: $\alpha \sim \text{Beta}(a, b)$.</li>
+                </ul>
+
+                <h5 style="margin-top: 1rem; color: var(--text-main);">3.2 Efeito de Saturação (Hill Function)</h5>
+                <p style="color: var(--text-muted);">Para modelar os retornos decrescentes (onde o ROI marginal cai à medida que o investimento aumenta), o Meridian aplica a função de Hill sobre o Adstock transformado.</p>
+                
+                <p style="text-align: center; margin: 1.5rem 0; color: var(--text-main); font-size: 1.1rem; overflow-x: auto; max-width: 100%; padding-bottom: 0.5rem;">
+                $$Hill(A_t; K, S) = \frac{1}{1 + \left( \frac{K}{A_t} \right)^S}$$
+                </p>
+                
+                <p style="color: var(--text-muted);">Onde:</p>
+                <ul style="color: var(--text-muted); padding-left: 1.5rem;">
+                    <li><strong>$A_t$</strong>: Mídia transformada pelo Adstock.</li>
+                    <li><strong>$S$ (Slope/Forma):</strong> Controla a inclinação da curva em "S". $S > 1$ indica curva em S; $S \leq 1$ indica curva C (côncava).</li>
+                    <li><strong>$K$ (Half-Saturation Point):</strong> O ponto onde a resposta atinge 50% do seu valor máximo.</li>
+                </ul>
+                <p style="color: var(--text-muted);">A combinação completa para um canal de mídia $m$ no modelo é:</p>
+                <p style="text-align: center; margin: 1.5rem 0; color: var(--text-main); font-size: 1.1rem; overflow-x: auto; max-width: 100%; padding-bottom: 0.5rem;">
+                $$Contribution_m = \mu_m \times Hill(Adstock(x_{m}), K_m, S_m)$$
+                </p>
+
+                <h4 style="margin-top: 2rem; color: var(--accent);">4. Estrutura Bayesiana Hierárquica</h4>
+                <p style="color: var(--text-muted);">A principal vantagem técnica do Meridian é o tratamento hierárquico dos parâmetros. Isso permite que o modelo "aprenda" padrões nacionais enquanto respeita as particularidades regionais (<em>Partial Pooling</em>).</p>
+
+                <h5 style="margin-top: 1rem; color: var(--text-main);">4.1 Hierarquia Geográfica</h5>
+                <p style="color: var(--text-muted);">Para um coeficiente de mídia $\beta_{g,m}$ (eficiência do canal $m$ na geografia $g$), assumimos que ele vem de uma distribuição comum (população nacional):</p>
+                
+                <p style="text-align: center; margin: 1.5rem 0; color: var(--text-main); font-size: 1.1rem; overflow-x: auto;">
+                $$
+                \begin{aligned}
+                \beta_{g,m} &\sim \text{LogNormal}(\mu_m, \sigma_m) \\
+                \mu_m &\sim \text{Normal}(\dots) \\
+                \sigma_m &\sim \text{HalfNormal}(\dots)
+                \end{aligned}
+                $$
+                </p>
+                <p style="color: var(--text-muted);">Isso permite o <em>Partial Pooling</em>, onde geografias menores aprendem com a média nacional.</p>
+
+                <h5 style="margin-top: 1rem; color: var(--text-main);">4.2 Amostragem MCMC</h5>
+                <p style="color: var(--text-muted);">O Meridian resolve essas equações complexas não analiticamente, mas computacionalmente, usando o amostrador <strong>NUTS (No-U-Turn Sampler)</strong>, um tipo de <em>Hamiltonian Monte Carlo</em>. Isso gera milhares de cenários plausíveis (distribuição posterior) para cada parâmetro, permitindo intervalos de credibilidade.</p>
+
+                <h4 style="margin-top: 2rem; color: var(--accent);">5. Calibração com Experimentos (ROI Priors)</h4>
+                <p style="color: var(--text-muted);">Um dos diferenciais críticos do Meridian documentado pelo Google é a capacidade de usar "Ground Truth" para corrigir o modelo. MMMs tradicionais sofrem com correlações espúrias. O Meridian resolve isso injetando resultados de Testes A/B ou Geo-Experiments nos <strong>Priors</strong> do ROI.</p>
+
+                <h5 style="margin-top: 1rem; color: var(--text-main);">5.1 Formulação do Prior de ROI</h5>
+                <p style="color: var(--text-muted);">Se um experimento de incrementalidade indicou que o canal <em>Search</em> tem um ROI de 4.0 com erro padrão de 0.5, o Meridian permite configurar o Prior do coeficiente $\beta_{Search}$ para refletir isso.</p>
+                <p style="color: var(--text-muted);">A relação matemática é:</p>
+                <p style="text-align: center; margin: 1.5rem 0; color: var(--text-main); font-size: 1.1rem; overflow-x: auto; max-width: 100%; padding-bottom: 0.5rem;">
+                $$ROI_{m} = \frac{\sum \text{Contribuição Marginal}_m}{\sum \text{Custo}_m}$$
+                </p>
+                <p style="color: var(--text-muted);">O modelo penaliza soluções onde o ROI inferido se desvia significativamente do ROI experimental, equilibrando a verossimilhança dos dados históricos com a evidência experimental.</p>
+                <p style="text-align: center; margin: 1.5rem 0; color: var(--text-main); font-size: 1.1rem; overflow-x: auto; max-width: 100%; padding-bottom: 0.5rem;">
+                $$P(\theta | Data) \propto P(Data | \theta) \times P_{calibração}(\theta)$$
+                </p>
+
+                <h4 style="margin-top: 2rem; color: var(--accent);">6. Otimização Orçamentária</h4>
+                <p style="color: var(--text-muted);">Com a curva de resposta $f_m(x)$ estimada para cada canal, o objetivo final é encontrar o vetor de investimento $X^* = [x_1, \dots, x_M]$ que maximiza a receita total, sujeito a uma restrição orçamentária $B$.</p>
+
+                <h5 style="margin-top: 1rem; color: var(--text-main);">6.1 Problema de Otimização Restrita</h5>
+                <p style="text-align: center; margin: 1.5rem 0; color: var(--text-main); font-size: 1.1rem; overflow-x: auto; max-width: 100%; padding-bottom: 0.5rem;">
+                $$
+                \begin{aligned}
+                \text{Maximizar } & \sum_{m=1}^{M} Response_m(x_m) \\
+                \text{Sujeito a } & \sum_{m=1}^{M} x_m \leq B \\
+                & L_m \leq x_m \leq U_m
+                \end{aligned}
+                $$
+                </p>
+                <p style="color: var(--text-muted);">Onde $L_m$ e $U_m$ são limites inferiores e superiores de gasto para evitar extrapolação da curva de Hill para regiões não observadas. O Meridian resolve isso usando otimizadores de gradiente (como SLSQP) sobre a superfície de resposta média posterior.</p>
+
+                <h4 style="margin-top: 2rem; color: var(--accent);">7. Conclusão</h4>
+                <p style="color: var(--text-muted);">O Modelo Meridian representa o estado da arte em MMM, transicionando da econometria frequentista tradicional para a inferência Bayesiana computacional. Ao modelar explicitamente a hierarquia geográfica e as transformações não-lineares de Adstock/Saturação, e ao permitir a injeção de priors experimentais, o Meridian oferece um caminho robusto para mensuração de causalidade em um ecossistema sem cookies. A transparência do código <em>open-source</em> permite que cientistas de dados validem e adaptem as premissas matemáticas, garantindo que o modelo reflita a realidade do negócio e não seja uma "caixa preta".</p>
+                
+                <div class="article-footer" style="margin-top: 3rem; border-top: 1px solid var(--glass-border); padding-top: 1.5rem;">
+                    <h5 style="color: var(--text-main); margin-bottom: 1rem;">Referências Bibliográficas e Documentação</h5>
+                    <ul style="font-size: 0.85rem; color: var(--text-muted); line-height: 1.8; padding-left: 1.5rem;">
+                        <li><strong>Google (2024).</strong> <em>Meridian: A Bayesian Mixed Marketing Modeling (MMM) Framework</em>. Google Open Source Documentation.</li>
+                        <li><strong>Jin, Y., et al. (2017).</strong> <em>Bayesian Methods for Media Mix Modeling with Carryover and Shape Effects</em>. Google Research.</li>
+                        <li><strong>McElreath, R. (2020).</strong> <em>Statistical Rethinking: A Bayesian Course with Examples in R and Stan</em>. CRC Press.</li>
+                        <li><strong>Tellis, G. J. (2006).</strong> <em>Modeling Marketing Mix</em>. Handbook of Marketing Research.</li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+
+        <div id="simulador-outliers" class="article-detail glass" style="display:none; padding: 40px; margin-top: 2rem;">
+            <div class="detail-header" style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 2rem;">
+                <h3 style="font-family:'Space Grotesk'; font-size: 1.8rem;">A Ilusão da Média: Caçando Outliers</h3>
+                <button class="close-hub-btn" onclick="fecharHub('simulador-outliers')" style="background:none; border:none; color:var(--accent); font-size: 2.5rem; cursor:pointer;">&times;</button>
+            </div>
+            <div class="detail-content article-body">
+                <p style="color: var(--text-muted); font-size: 1.1rem; line-height: 1.8;">Durante a Análise Exploratória (AED) de dados financeiros, frequentemente nos deparamos com distribuições assimétricas, como o salário ou a <strong>renda declarada</strong> dos clientes. Nessas situações, confiar cegamente na "Média" pode levar a decisões de negócio imprecisas.</p>
+                <p style="color: var(--text-muted); font-size: 1.1rem; margin-bottom: 2rem; line-height: 1.8;">Teste você mesmo no laboratório abaixo: arraste a bolinha mais à direita (que representa o cliente com renda atípica) para a esquerda ou direita. Observe como a linha da <strong>Média</strong> enlouquece para acompanhá-lo, enquanto a <strong>Mediana</strong> permanece sólida no centro, descrevendo a verdadeira realidade da massa de clientes.</p>
+
+                <div style="background: rgba(0,0,0,0.2); padding: 2rem; border-radius: 8px; border: 1px solid var(--glass-border); text-align: center; user-select: none;">
+                    <h4 style="color: var(--text-main); margin-top: 0; margin-bottom: 1.5rem; text-transform: uppercase; font-size: 0.85rem; letter-spacing: 2px;"><i class="fas fa-hand-pointer"></i> Arraste os Pontos (Renda dos Clientes)</h4>
+                    
+                    <div style="display: flex; justify-content: space-around; margin-bottom: 2rem; flex-wrap: wrap; gap: 1rem;">
+                        <div style="background: rgba(255, 255, 255, 0.05); padding: 15px 30px; border-radius: 8px; border: 1px solid rgba(255,255,255,0.2); min-width: 200px;">
+                            <strong style="color: #ff6b6b; display:block; font-size: 0.9rem; text-transform: uppercase;">Média</strong> 
+                            <span id="sim-mean-val" style="color: var(--text-main); font-size: 1.5rem; font-family: 'Space Grotesk'; font-weight: bold;">R$ 0,00</span>
+                        </div>
+                        <div style="background: rgba(255, 255, 255, 0.05); padding: 15px 30px; border-radius: 8px; border: 1px solid rgba(255,255,255,0.2); min-width: 200px;">
+                            <strong style="color: #1dd1a1; display:block; font-size: 0.9rem; text-transform: uppercase;">Mediana</strong> 
+                            <span id="sim-median-val" style="color: var(--text-main); font-size: 1.5rem; font-family: 'Space Grotesk'; font-weight: bold;">R$ 0,00</span>
                         </div>
                     </div>
-                </div>
-            </div>
-        </section>
 
-        <section id="projects" class="projects">
-            <div class="container">
-                <h2 class="section-title">Projetos de Impacto</h2>
-                <div class="grid">
-                    <div class="card glass">
-                        <div class="card-content">
-                            <span class="tag">Machine Learning</span>
-                            <h3>Projeto em Desenvolvimento</h3>
-                            <p>Estrutura end-to-end focada em modelos contrafactuais e otimização.</p>
-                            <button class="link-btn open-modal-btn" data-modal="modal-proj-1">Ver Detalhes →</button>
-                        </div>
+                    <div id="sim-track" style="position: relative; width: 100%; height: 120px; margin-top: 3rem;">
+                        <div style="position: absolute; top: 50%; left: 0%; right: 0%; height: 2px; background: rgba(255,255,255,0.2); transform: translateY(-50%);"></div>
+                        <div id="sim-mean-line" style="position: absolute; top: 10%; bottom: 10%; width: 2px; background: #ff6b6b; transition: left 0.1s; z-index: 1;"></div>
+                        <div id="sim-median-line" style="position: absolute; top: 10%; bottom: 10%; width: 2px; background: #1dd1a1; transition: left 0.1s; z-index: 1;"></div>
+                        <div id="sim-mean-label" style="position: absolute; top: -20px; color: #ff6b6b; font-size: 0.8rem; transform: translateX(-50%); font-weight: bold; transition: left 0.1s;">Média</div>
+                        <div id="sim-median-label" style="position: absolute; bottom: -20px; color: #1dd1a1; font-size: 0.8rem; transform: translateX(-50%); font-weight: bold; transition: left 0.1s;">Mediana</div>
+                        <div id="sim-points-container" style="position: absolute; top: 0; left: 0%; right: 0%; bottom: 0; z-index: 10;"></div>
+                    </div>
+                    
+                    <div style="display: flex; justify-content: space-between; margin-top: 15px; color: var(--text-muted); font-size: 0.85rem; font-family: monospace;">
+                        <span>R$ 0</span>
+                        <span>R$ 20.000+</span>
                     </div>
                 </div>
+                
+                <p style="color: var(--text-muted); margin-top: 2.5rem; border-left: 4px solid var(--accent); padding-left: 15px;"><strong>Conclusão Analítica:</strong> É por este exato motivo que, na nossa <em>Análise Exploratória da Tabela Clientes do Bank Twin</em>, observamos uma média de R$ 6.484,18 puxada fortemente por <em>outliers</em>, enquanto a mediana de R$ 3.498,51 revelava o verdadeiro centro de gravidade da distribuição de renda do banco.</p>
             </div>
-        </section>
+        </div>
 
-        <section id="articles" class="articles">
-            <div class="container">
-                <h2 class="section-title">Artigos Técnicos</h2>
-                <div class="grid">
-                    <div class="card glass">
-                        <div class="card-content">
-                            <span class="tag">Estatística</span>
-                            <h3>Framework Meridian</h3>
-                            <p>Análise técnica sobre a abordagem bayesiana do Google para MMM.</p>
-                            <button class="link-btn open-modal-btn" data-modal="modal-art-1">Ler Mais →</button>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </section>
+    </div>
+</section>
 
-        <section id="contact" class="contact">
-            <div class="container">
-                <h2 class="section-title">Vamos Conversar?</h2>
-                <div class="contact-wrapper glass">
-                    <p>Interessado em colaborações ou consultoria em dados.</p>
-                    <div class="social-links">
-                        <a href="https://www.linkedin.com/in/caleb-saldanha" class="contact-link" target="_blank">LinkedIn</a>
-                        <a href="https://github.com/calebsaldanha" class="contact-link" target="_blank">GitHub</a>
-                        <a href="mailto:calebsaldanhawork@gmail.com" class="contact-link">Email</a>
-                    </div>
+        <section id="catalog">
+    <div class="container">
+        <h2 class="section-title">Governança e Catálogo</h2>
+        <div class="catalog-layout glass" style="display: grid; grid-template-columns: 320px 1fr; gap: 2rem; padding: 2rem;">
+            <aside>
+                <div id="catalog-content" style="display: block;">
+                    
+                    <details open style="margin-bottom: 20px;">
+                        <summary style="font-size: 1rem; color: var(--accent); border-bottom: 1px solid var(--glass-border); padding-bottom: 5px; margin-bottom: 15px; cursor: pointer; font-weight: bold; list-style: none;">
+                            <i class="fas fa-database" style="margin-right: 8px;"></i> Bank Digital Twin <i class="fas fa-chevron-down" style="float: right; font-size: 0.8rem; margin-top: 5px;"></i>
+                        </summary>
+                        <ul style="list-style: none; margin-bottom: 15px; padding-left: 10px;">
+                            <li class="table-item" onclick="loadTable('campanhas_marketing')">campanhas_marketing</li>
+                            <li class="table-item" onclick="loadTable('clientes')">clientes</li>
+                            <li class="table-item" onclick="loadTable('sessoes_dispositivos')">sessoes_dispositivos</li>
+                            <li class="table-item" onclick="loadTable('eventos_app')">eventos_app</li>
+                            <li class="table-item" onclick="loadTable('contas')">contas</li>
+                            <li class="table-item" onclick="loadTable('cartoes')">cartoes</li>
+                            <li class="table-item" onclick="loadTable('transacoes_cartao')">transacoes_cartao</li>
+                            <li class="table-item" onclick="loadTable('investimentos_posicao')">investimentos_posicao</li>
+                            <li class="table-item" onclick="loadTable('contratos_credito')">contratos_credito</li>
+                            <li class="table-item" onclick="loadTable('parcelas_credito')">parcelas_credito</li>
+                        </ul>
+                    </details>
+                    
+                    <details style="margin-bottom: 20px;">
+                        <summary style="font-size: 1rem; color: var(--accent); border-bottom: 1px solid var(--glass-border); padding-bottom: 5px; margin-bottom: 15px; cursor: pointer; font-weight: bold; list-style: none;">
+                            <i class="fas fa-chart-line" style="margin-right: 8px;"></i> Macroeconomic Pipeline <i class="fas fa-chevron-down" style="float: right; font-size: 0.8rem; margin-top: 5px;"></i>
+                        </summary>
+                        <ul style="list-style: none; padding-left: 10px;">
+                            <li class="table-item" onclick="loadTable('macroeconomia')">exogenas.macroeconomia</li>
+                            <li class="table-item" onclick="loadTable('feriados')">exogenas.feriados</li>
+                            <li class="table-item" onclick="loadTable('google_trends')">exogenas.google_trends</li>
+                        </ul>
+                    </details>
+                    
                 </div>
-            </div>
-        </section>
+            </aside>
+            <main>
+                <h3 id="table-title" style="color: var(--accent); margin-bottom: 0.5rem;">public.clientes</h3>
+                <p id="table-desc" style="color: var(--text-muted); margin-bottom: 1.5rem;">Cadastro mestre de clientes.</p>
+                <table style="width: 100%; border-collapse: collapse;">
+                    <thead style="text-align: left; border-bottom: 1px solid var(--glass-border);">
+                        <tr><th style="padding:10px;">COLUNA</th><th style="padding:10px;">TIPO</th><th style="padding:10px;">DESCRIÇÃO</th></tr>
+                    </thead>
+                    <tbody id="table-body"></tbody>
+                </table>
+            </main>
+        </div>
+    </div>
+</section>
+
+        <section id="contact">
+    <div class="container">
+        <h2 class="section-title">Contato</h2>
+        <div class="contact-grid">
+            <a href="https://www.linkedin.com/in/caleb-saldanha" target="_blank" class="contact-card glass">
+                <i class="fab fa-linkedin"></i>
+                <h4>LinkedIn</h4>
+                <p>Conexões Profissionais</p>
+            </a>
+            <a href="https://github.com/calebsaldanha" target="_blank" class="contact-card glass">
+                <i class="fab fa-github"></i>
+                <h4>GitHub</h4>
+                <p>Repositórios e Código</p>
+            </a>
+            <a href="mailto:calebsaldanhawork@gmail.com" class="contact-card glass">
+                <i class="fas fa-envelope"></i>
+                <h4>E-mail</h4>
+                <p>Fale Comigo</p>
+            </a>
+        </div>
+    </div>
+</section>
+
     </main>
-
-    <footer>
-        <div class="container">
-            <p>&copy; 2026 Caleb Saldanha. Crafted with rigor.</p>
-        </div>
-    </footer>
-
-    <div class="modal-overlay" id="modal-proj-1">
-        <div class="modal-content glass">
-            <button class="close-modal-btn">&times;</button>
-            <span class="tag">Machine Learning</span>
-            <h2>Projeto em Desenvolvimento</h2>
-            <div class="modal-body">
-                <p>Aqui entrará todo o detalhamento técnico do seu projeto: arquitetura de dados, metodologias utilizadas (ex: XGBoost, SHAP values), e os resultados de negócio alcançados.</p>
-                <br>
-                <p><strong>Stack:</strong> Python, Pandas, Scikit-learn, SQL.</p>
+    <!-- Modal Eng -->
+<div class="modal-overlay" id="modal-eng">
+    <div class="modal-content glass" style="max-width: 1000px; padding: 3rem;">
+        <button class="close-modal-btn" onclick="document.getElementById('modal-eng').style.display='none'" style="float:right; background:none; border:none; color:var(--accent); font-size:2.5rem; cursor:pointer;">&times;</button>
+        <span class="tag" style="color:var(--accent); font-size:0.8rem; text-transform:uppercase; font-weight: 600; letter-spacing: 1px;">Data Engineering & Architecture</span>
+        <h2 style="margin: 1rem 0 2rem; font-family:'Space Grotesk'; font-size: 2.2rem;">Bank Digital Twin: Engine de Simulação</h2>
+        <div class="article-body">
+            <div style="background: rgba(224, 224, 224, 0.05); padding: 1.5rem; border-left: 4px solid var(--accent); border-radius: 4px; margin-bottom: 2.5rem;">
+                <h4 style="color: var(--accent); margin-top: 0; margin-bottom: 0.5rem;">Objetivo do Projeto</h4>
+                <p style="margin-bottom: 0; color: var(--text-muted); font-size: 0.95rem;">Construir um motor de simulação sintética de altíssima fidelidade para representar um ecossistema bancário digital ponta a ponta. A meta foi gerar um banco de dados volumoso (50k clientes, 1.1M+ transações) com integridade referencial absoluta e <strong>vieses causais embutidos</strong>, criando um <em>sandbox</em> realista para treinar modelos preditivos de Risco, Fraude e Inferência Causal (MTA).</p>
             </div>
-            <div class="modal-footer">
-                <a href="#" class="btn">Acessar Repositório</a>
+            
+            <h4 style="color:var(--text-main); margin-bottom: 1rem; border-bottom: 1px solid var(--glass-border); padding-bottom: 0.5rem;">O Processo (Pipeline de Construção)</h4>
+            <ol style="color: var(--text-muted); padding-left: 1.5rem; margin-bottom: 2.5rem; line-height: 1.8;">
+                <li><strong>Modelagem Relacional:</strong> Design do schema no PostgreSQL mapeando 4 camadas lógicas (Identidade, Produtos, Crédito e Transacional).</li>
+                <li><strong>Geração Algorítmica (Python):</strong> Scripts parametrizados utilizando bibliotecas estatísticas (Numpy) para garantir distribuições não-uniformes. Exemplo: a <em>renda_declarada</em> segue uma distribuição LogNormal, impactando diretamente a probabilidade de aprovação de <em>limite_total</em> de cartão e o enquadramento de <em>taxa_juros_mes</em>.</li>
+                <li><strong>Orquestração de Dados:</strong> Ingestão massiva em lotes (batch inserts) utilizando <code>SQLAlchemy</code> e psycopg2, rodando contra um banco de dados containerizado via Docker Compose.</li>
+                <li><strong>Auditoria e Validação:</strong> Pipeline de Data Quality para garantir ausência de registros órfãos e lógica temporal estrita (ex: <code>data_pagamento >= data_vencimento</code> para calcular churn e atrasos reais).</li>
+            </ol>
+
+            <h4 style="color:var(--text-main); margin-bottom: 1rem; border-bottom: 1px solid var(--glass-border); padding-bottom: 0.5rem;">Arquitetura de Dados: Tabelas e Colunas</h4>
+            <p style="color: var(--text-muted); font-size: 0.9rem; margin-bottom: 1.5rem;">A base de dados é segmentada em 10 tabelas principais (schema <code>public</code>), totalizando 61 colunas correlacionadas:</p>
+
+            <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 2rem;">
+                <div style="background: rgba(0,0,0,0.3); padding: 1.5rem; border-radius: 8px; border: 1px solid var(--glass-border);">
+                    <h5 style="color: var(--accent); margin-bottom: 1rem; font-size: 1.1rem;">Layer 1: Fundação & Identidade</h5>
+                    <ul style="list-style: none; padding: 0; color: var(--text-muted); font-size: 0.85rem; line-height: 1.6;">
+                        <li style="margin-bottom: 15px;"><strong style="color: #fff;">clientes:</strong><br><span style="color: #888;">cliente_id, nome, cpf, data_nascimento, renda_declarada, segmento, behavior_score, data_cadastro</span></li>
+                        <li><strong style="color: #fff;">sessoes_dispositivos:</strong><br><span style="color: #888;">dispositivo_id, cliente_id, os, modelo_aparelho, data_primeiro_acesso</span></li>
+                    </ul>
+                </div>
+
+                <div style="background: rgba(0,0,0,0.3); padding: 1.5rem; border-radius: 8px; border: 1px solid var(--glass-border);">
+                    <h5 style="color: var(--accent); margin-bottom: 1rem; font-size: 1.1rem;">Layer 2: Produtos Bancários</h5>
+                    <ul style="list-style: none; padding: 0; color: var(--text-muted); font-size: 0.85rem; line-height: 1.6;">
+                        <li style="margin-bottom: 15px;"><strong style="color: #fff;">contas:</strong><br><span style="color: #888;">conta_id, cliente_id, tipo_conta, data_abertura, saldo_atual, status</span></li>
+                        <li style="margin-bottom: 15px;"><strong style="color: #fff;">cartoes:</strong><br><span style="color: #888;">cartao_id, conta_id, tipo_cartao, categoria, limite_total, limite_disponivel, status</span></li>
+                        <li><strong style="color: #fff;">investimentos_posicao:</strong><br><span style="color: #888;">investimento_id, cliente_id, tipo_ativo, valor_aplicado, valor_atual, perfil_risco</span></li>
+                    </ul>
+                </div>
+
+                <div style="background: rgba(0,0,0,0.3); padding: 1.5rem; border-radius: 8px; border: 1px solid var(--glass-border);">
+                    <h5 style="color: var(--accent); margin-bottom: 1rem; font-size: 1.1rem;">Layer 3: Operações de Crédito</h5>
+                    <ul style="list-style: none; padding: 0; color: var(--text-muted); font-size: 0.85rem; line-height: 1.6;">
+                        <li style="margin-bottom: 15px;"><strong style="color: #fff;">contratos_credito:</strong><br><span style="color: #888;">contrato_id, conta_id, tipo_produto, valor_contratado, taxa_juros_mes, data_contratacao</span></li>
+                        <li><strong style="color: #fff;">parcelas_credito:</strong><br><span style="color: #888;">parcela_id, contrato_id, numero_parcela, valor_parcela, data_vencimento, data_pagamento, status_pagamento</span></li>
+                    </ul>
+                </div>
+
+                <div style="background: rgba(0,0,0,0.3); padding: 1.5rem; border-radius: 8px; border: 1px solid var(--glass-border);">
+                    <h5 style="color: var(--accent); margin-bottom: 1rem; font-size: 1.1rem;">Layer 4: Fatos (Transações & Marketing)</h5>
+                    <ul style="list-style: none; padding: 0; color: var(--text-muted); font-size: 0.85rem; line-height: 1.6;">
+                        <li style="margin-bottom: 15px;"><strong style="color: #fff;">transacoes_cartao:</strong><br><span style="color: #888;">transacao_id, cartao_id, data_transacao, valor, estabelecimento, mcc_grupo, tipo_transacao</span></li>
+                        <li style="margin-bottom: 15px;"><strong style="color: #fff;">campanhas_marketing:</strong><br><span style="color: #888;">campanha_id, nome_campanha, objetivo, canal, custo_clique_estimado, data_inicio</span></li>
+                        <li><strong style="color: #fff;">eventos_app:</strong><br><span style="color: #888;">evento_id, dispositivo_id, cliente_id, campanha_id, sessao_id, tipo_evento, data_evento, metadados</span></li>
+                    </ul>
+                </div>
+            </div>
+
+            <div style="display: flex; gap: 10px; flex-wrap: wrap; margin-top: 3rem; justify-content: center;">
+                <span style="padding: 6px 15px; border: 1px solid var(--accent); color: var(--accent); border-radius: 20px; font-size: 0.85rem; font-weight: 600;">Python</span>
+                <span style="padding: 6px 15px; border: 1px solid var(--accent); color: var(--accent); border-radius: 20px; font-size: 0.85rem; font-weight: 600;">NumPy & Pandas</span>
+                <span style="padding: 6px 15px; border: 1px solid var(--accent); color: var(--accent); border-radius: 20px; font-size: 0.85rem; font-weight: 600;">PostgreSQL</span>
+                <span style="padding: 6px 15px; border: 1px solid var(--accent); color: var(--accent); border-radius: 20px; font-size: 0.85rem; font-weight: 600;">Docker</span>
+                <span style="padding: 6px 15px; border: 1px solid var(--accent); color: var(--accent); border-radius: 20px; font-size: 0.85rem; font-weight: 600;">SQLAlchemy</span>
             </div>
         </div>
     </div>
+</div>
 
-    <div class="modal-overlay" id="modal-art-1">
-        <div class="modal-content glass">
-            <button class="close-modal-btn">&times;</button>
-            <span class="tag">Estatística</span>
-            <h2>Framework Meridian</h2>
-            <div class="modal-body">
-                <p>Aqui você poderá colocar o resumo do seu artigo sobre MMM e inferência Bayesiana, mantendo a página principal limpa e o leitor focado no seu texto.</p>
+<!-- Modal Exo -->
+<div class="modal-overlay" id="modal-exo">
+    <div class="modal-content glass" style="max-width: 1000px; padding: 3rem;">
+        <button class="close-modal-btn" onclick="document.getElementById('modal-exo').style.display='none'" style="float:right; background:none; border:none; color:var(--accent); font-size:2.5rem; cursor:pointer;">&times;</button>
+        <span class="tag" style="color:var(--accent); font-size:0.8rem; text-transform:uppercase; font-weight: 600; letter-spacing: 1px;">Data Engineering & API Integration</span>
+        <h2 style="margin: 1rem 0 2rem; font-family:'Space Grotesk'; font-size: 2.2rem;">Pipeline Exógeno e Macroeconômico</h2>
+        <div class="article-body">
+            <div style="background: rgba(224, 224, 224, 0.05); padding: 1.5rem; border-left: 4px solid var(--accent); border-radius: 4px; margin-bottom: 2.5rem;">
+                <h4 style="color: var(--accent); margin-top: 0; margin-bottom: 0.5rem;">Objetivo do Projeto</h4>
+                <p style="margin-bottom: 0; color: var(--text-muted); font-size: 0.95rem;">Automatizar a extração e o tratamento de indicadores econômicos oficiais e dados de calendário para isolar sazonalidades em modelos preditivos. Este pipeline alimenta o schema <code>exogenas</code>, fornecendo o "cenário externo" necessário para estudos de Inferência Causal, Contrafactuais e Credit Scoring dinâmico.</p>
+            </div>
+            
+            <h4 style="color:var(--text-main); margin-bottom: 1rem; border-bottom: 1px solid var(--glass-border); padding-bottom: 0.5rem;">O Processo (Pipeline ETL)</h4>
+            <ol style="color: var(--text-muted); padding-left: 1.5rem; margin-bottom: 2.5rem; line-height: 1.8;">
+                <li><strong>Extração (Extract):</strong> Consumo de APIs governamentais abertas. Uso do SGS (Sistema Gerenciador de Séries Temporais) do Banco Central para IPCA e Selic; API Olinda (PTAX) para cotação cambial do Dólar; e Brasil API para mapeamento do calendário de Feriados Nacionais.</li>
+                <li><strong>Transformação (Transform):</strong> Limpeza, formatação e normalização temporal utilizando Python e <code>Pandas</code>. Alinhamento de granularidades temporais distintas (diária para Selic/PTAX, mensal extrapolada para IPCA) para garantir consistência algorítmica.</li>
+                <li><strong>Carga (Load):</strong> Ingestão no banco de dados analítico <code>central_data_hub</code> (PostgreSQL) usando <code>SQLAlchemy</code>, atualizando o schema <code>exogenas</code> de forma idempotente, sem duplicar registros históricos existentes.</li>
+            </ol>
+
+            <h4 style="color:var(--text-main); margin-bottom: 1rem; border-bottom: 1px solid var(--glass-border); padding-bottom: 0.5rem;">Arquitetura de Dados: Schema Exógenas</h4>
+            <p style="color: var(--text-muted); font-size: 0.9rem; margin-bottom: 1.5rem;">Os dados são armazenados de forma desacoplada no schema <code>exogenas</code> para fácil cruzamento (JOIN) com os dados transacionais e de marketing:</p>
+
+            <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 2rem;">
+                <div style="background: rgba(0,0,0,0.3); padding: 1.5rem; border-radius: 8px; border: 1px solid var(--glass-border);">
+                    <h5 style="color: var(--accent); margin-bottom: 1rem; font-size: 1.1rem;">Indicadores Macroeconômicos</h5>
+                    <ul style="list-style: none; padding: 0; color: var(--text-muted); font-size: 0.85rem; line-height: 1.6;">
+                        <li style="margin-bottom: 15px;"><strong style="color: #fff;">macroeconomia:</strong><br><span style="color: #888;">data (PK), selic_meta, selic_diaria, ipca_mensal, ipca_acumulado, usd_ptax_compra, usd_ptax_venda</span></li>
+                    </ul>
+                </div>
+
+                <div style="background: rgba(0,0,0,0.3); padding: 1.5rem; border-radius: 8px; border: 1px solid var(--glass-border);">
+                    <h5 style="color: var(--accent); margin-bottom: 1rem; font-size: 1.1rem;">Calendário e Sazonalidade</h5>
+                    <ul style="list-style: none; padding: 0; color: var(--text-muted); font-size: 0.85rem; line-height: 1.6;">
+                        <li style="margin-bottom: 15px;"><strong style="color: #fff;">feriados:</strong><br><span style="color: #888;">data (PK), nome, tipo (nacional, estadual, municipal)</span></li>
+                    </ul>
+                </div>
+            </div>
+
+            <div style="display: flex; gap: 10px; flex-wrap: wrap; margin-top: 3rem; justify-content: center;">
+                <span style="padding: 6px 15px; border: 1px solid var(--accent); color: var(--accent); border-radius: 20px; font-size: 0.85rem; font-weight: 600;">Python</span>
+                <span style="padding: 6px 15px; border: 1px solid var(--accent); color: var(--accent); border-radius: 20px; font-size: 0.85rem; font-weight: 600;">Pandas</span>
+                <span style="padding: 6px 15px; border: 1px solid var(--accent); color: var(--accent); border-radius: 20px; font-size: 0.85rem; font-weight: 600;">APIs REST</span>
+                <span style="padding: 6px 15px; border: 1px solid var(--accent); color: var(--accent); border-radius: 20px; font-size: 0.85rem; font-weight: 600;">PostgreSQL</span>
+                <span style="padding: 6px 15px; border: 1px solid var(--accent); color: var(--accent); border-radius: 20px; font-size: 0.85rem; font-weight: 600;">Docker</span>
             </div>
         </div>
     </div>
+</div>
 
-    <script src="assets/js/script.js"></script>
+<!-- Modal Notebooks -->
+<div class="modal-overlay" id="modal-notebook">
+    <div class="modal-content glass" style="max-width: 1200px; width: 95%; height: 90vh; padding: 1.5rem; display: flex; flex-direction: column;">
+        <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 1rem; border-bottom: 1px solid var(--glass-border); padding-bottom: 10px;">
+            <h3 id="notebook-title" style="font-family:'Space Grotesk'; font-size: 1.5rem; color: var(--text-main);">Notebook</h3>
+            <button class="close-modal-btn" onclick="fecharModalNotebook()" style="background:none; border:none; color:var(--accent); font-size:2.5rem; cursor:pointer; line-height: 1;">&times;</button>
+        </div>
+        <iframe id="notebook-frame" src="" style="width: 100%; flex-grow: 1; border: none; border-radius: 8px; background: #fff;"></iframe>
+    </div>
+</div>
+
+<script>
+    function toggleTasks(targetId, iconId) {
+        const tasksDiv = document.getElementById(targetId);
+        const icon = document.getElementById(iconId);
+        if (tasksDiv.style.display === 'none' || tasksDiv.style.display === '') {
+            tasksDiv.style.display = 'block';
+            icon.classList.remove('fa-chevron-down');
+            icon.classList.add('fa-chevron-up');
+        } else {
+            tasksDiv.style.display = 'none';
+            icon.classList.remove('fa-chevron-up');
+            icon.classList.add('fa-chevron-down');
+        }
+    }
+    
+    function abrirModalNotebook(caminhoArquivo, titulo) {
+        if (!caminhoArquivo) return;
+        document.getElementById('notebook-title').innerText = "AED: " + titulo;
+        document.getElementById('notebook-frame').src = caminhoArquivo;
+        document.getElementById('modal-notebook').style.display = 'flex';
+    }
+
+    function fecharModalNotebook() {
+        document.getElementById('modal-notebook').style.display = 'none';
+        document.getElementById('notebook-frame').src = "";
+        let selects = document.querySelectorAll('.notebook-select');
+        selects.forEach(s => s.selectedIndex = 0);
+    }
+
+    function abrirHub(id) {
+        document.querySelectorAll('#hub .article-detail').forEach(el => el.style.display = 'none');
+        const target = document.getElementById(id);
+        if(target) {
+            target.style.display = 'block';
+            target.scrollIntoView({ behavior: 'smooth', block: 'start' });
+            
+            if(id === 'simulador-outliers' && !window.simLoaded) {
+                initSimulator();
+                window.simLoaded = true;
+            }
+        }
+    }
+
+    function fecharHub(id) {
+        document.getElementById(id).style.display = 'none';
+    }
+
+    function initSimulator() {
+        const simValues = [2000, 3000, 4000, 5000, 18000]; 
+        const simMax = 20000;
+        const simContainer = document.getElementById('sim-points-container');
+        
+        function updateSim() {
+            let sorted = [...simValues].sort((a,b) => a - b);
+            const sum = sorted.reduce((a,b) => a + b, 0);
+            const mean = sum / sorted.length;
+            const median = sorted[Math.floor(sorted.length / 2)];
+            
+            document.getElementById('sim-mean-val').innerText = mean.toLocaleString('pt-BR', {style: 'currency', currency: 'BRL'});
+            document.getElementById('sim-median-val').innerText = median.toLocaleString('pt-BR', {style: 'currency', currency: 'BRL'});
+            
+            const meanPct = (mean / simMax) * 100;
+            const medianPct = (median / simMax) * 100;
+            
+            document.getElementById('sim-mean-line').style.left = `${meanPct}%`;
+            document.getElementById('sim-mean-label').style.left = `${meanPct}%`;
+            
+            document.getElementById('sim-median-line').style.left = `${medianPct}%`;
+            document.getElementById('sim-median-label').style.left = `${medianPct}%`;
+        }
+
+        simContainer.innerHTML = '';
+        simValues.forEach((val, index) => {
+            const pt = document.createElement('div');
+            pt.style.position = 'absolute';
+            pt.style.width = '28px';
+            pt.style.height = '28px';
+            pt.style.background = 'var(--accent)'; 
+            pt.style.borderRadius = '50%';
+            pt.style.top = '50%';
+            pt.style.transform = 'translate(-50%, -50%)';
+            pt.style.cursor = 'grab';
+            pt.style.border = '3px solid rgba(255,255,255,0.7)';
+            pt.style.left = `${(val / simMax) * 100}%`;
+            pt.style.touchAction = 'none'; // Evita zoom no mobile
+            
+            const ptLabel = document.createElement('div');
+            ptLabel.style.position = 'absolute';
+            ptLabel.style.top = '-30px';
+            ptLabel.style.left = '50%';
+            ptLabel.style.transform = 'translateX(-50%)';
+            ptLabel.style.fontSize = '12px';
+            ptLabel.style.color = 'var(--text-muted)';
+            ptLabel.style.pointerEvents = 'none';
+            pt.appendChild(ptLabel);
+
+            let isDragging = false;
+            
+            const onDrag = (clientX) => {
+                const rect = simContainer.getBoundingClientRect();
+                let x = clientX - rect.left;
+                let newPct = (x / rect.width) * 100;
+                newPct = Math.max(0, Math.min(100, newPct));
+                pt.style.left = `${newPct}%`;
+                
+                let newVal = (newPct / 100) * simMax;
+                simValues[index] = newVal;
+                ptLabel.innerText = Math.round(newVal/1000) + 'k';
+                updateSim();
+            };
+
+            const startDrag = () => { 
+                isDragging = true; 
+                pt.style.cursor = 'grabbing'; 
+                ptLabel.innerText = Math.round(simValues[index]/1000) + 'k'; 
+            };
+            
+            const stopDrag = () => { 
+                isDragging = false; 
+                pt.style.cursor = 'grab'; 
+                ptLabel.innerText = ''; 
+            };
+
+            // Eventos de Mouse (Desktop)
+            pt.addEventListener('mousedown', startDrag);
+            window.addEventListener('mousemove', (e) => { if(isDragging) onDrag(e.clientX); });
+            window.addEventListener('mouseup', stopDrag);
+
+            // Eventos de Toque (Mobile)
+            pt.addEventListener('touchstart', (e) => { startDrag(); }, {passive: true});
+            window.addEventListener('touchmove', (e) => { 
+                if(isDragging) {
+                    onDrag(e.touches[0].clientX); 
+                    if (e.cancelable) e.preventDefault(); // Impede rolagem da tela
+                }
+            }, {passive: false});
+            window.addEventListener('touchend', stopDrag);
+
+            simContainer.appendChild(pt);
+        });
+        
+        updateSim();
+    }
+</script>
+<script src="assets/js/script.js?v=2"></script>
+
 </body>
 </html>

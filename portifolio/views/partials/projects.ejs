@@ -1,0 +1,113 @@
+<section id="projects">
+    <div class="container">
+        <h2 class="section-title">Projetos e Modelagem</h2>
+        
+        <div class="card glass project-master-card" onclick="toggleTasks('tasks-bank', 'icon-bank')" style="cursor: pointer; border: 1px solid var(--accent); transition: all 0.3s ease;">
+            <div style="display: flex; justify-content: space-between; align-items: flex-start;">
+                <div>
+                    <span class="tag" style="color:var(--accent); font-size:0.8rem; text-transform:uppercase; font-weight: bold;">Ecosystem Engine</span>
+                    <h3 style="margin: 1rem 0; font-size: 1.8rem; font-family: 'Space Grotesk';">Bank Digital Twin</h3>
+                    <p style="color: var(--text-muted); max-width: 800px;">Uma base de dados sintética de altíssima fidelidade, modelada do zero. Contém 50.000 clientes e 1.1M+ de transações correlacionadas, servindo como fundação para testes avançados de Machine Learning em Risco, Fraude e Marketing.</p>
+                </div>
+                <div style="color: var(--accent); font-size: 2rem;">
+                    <i id="icon-bank" class="fas fa-chevron-down"></i>
+                </div>
+            </div>
+            <p style="margin-top: 1rem; font-size: 0.85rem; color: var(--accent);">Clique para expandir as Verticais Analíticas</p>
+        </div>
+
+        <div id="tasks-bank" style="display: none; margin-top: 3rem; margin-bottom: 4rem;">
+            <h3 style="margin-bottom: 2rem; font-family: 'Space Grotesk'; border-bottom: 1px solid var(--glass-border); padding-bottom: 10px;">Verticais de Análise e Modelagem</h3>
+            <div class="grid">
+                <div class="card glass task-card">
+                    <span style="font-size: 0.75rem; color: var(--accent); text-transform: uppercase; letter-spacing: 1px;">Data Engineering</span>
+                    <h4 style="margin: 0.5rem 0 1rem; color: var(--text-main);">Pipeline & Arquitetura</h4>
+                    <p style="color: var(--text-muted); font-size: 0.9rem; margin-bottom: 1.5rem;">Desenvolvimento do motor de simulação, ingestão em 4 camadas e orquestração da infraestrutura (Docker/PostgreSQL).</p>
+                    <div style="display: flex; gap: 1rem; align-items: center;">
+                        <button class="btn open-modal-btn" data-modal="modal-eng" style="padding: 8px 15px; font-size: 0.85rem;" onclick="document.getElementById('modal-eng').style.display='flex'">Detalhes Técnicos</button>
+                        <a href="https://github.com/calebsaldanha/bank-twin-data-engineering" target="_blank" style="font-size: 0.9rem; color: var(--text-muted);"><i class="fab fa-github"></i> Repositório Público</a>
+                    </div>
+                </div>
+                <div class="card glass task-card" style="display: flex; flex-direction: column;">
+                    <span style="font-size: 0.75rem; color: var(--accent); text-transform: uppercase; letter-spacing: 1px;">Analytics</span>
+                    <h4 style="margin: 0.5rem 0 1rem; color: var(--text-main);">Análise Exploratória (AED)</h4>
+                    <p style="color: var(--text-muted); font-size: 0.9rem; margin-bottom: auto;">Auditoria das distribuições estatísticas (LogNormal), análise de safras e verificação de vieses causais inseridos na base.</p>
+                    <div style="margin-top: 1.5rem; border-top: 1px solid rgba(255,255,255,0.1); padding-top: 1rem;">
+                        <label style="font-size: 0.75rem; color: var(--accent); text-transform: uppercase; letter-spacing: 1px; display: block; margin-bottom: 8px;"><i class="fas fa-desktop"></i> Ver Notebooks (AED)</label>
+                        <select class="notebook-select" onchange="abrirModalNotebook(this.value, this.options[this.selectedIndex].text)" style="width: 100%; padding: 8px; background: rgba(0,0,0,0.3); color: #fff; border: 1px solid rgba(255,255,255,0.2); border-radius: 6px; cursor: pointer; outline: none;">
+                            <option value="" disabled selected>Selecione uma tabela...</option>
+                            <option value="projetos/bank-digital-twin/aed/eda_clientes.html">public.clientes</option>
+                        </select>
+                    </div>
+                </div>
+                <div class="card glass task-card">
+                    <span style="font-size: 0.75rem; color: var(--text-muted); text-transform: uppercase; letter-spacing: 1px;">Machine Learning</span>
+                    <h4 style="margin: 0.5rem 0 1rem; color: var(--text-main);">Modelagem de Risco (Credit Scoring)</h4>
+                    <p style="color: var(--text-muted); font-size: 0.9rem; margin-bottom: 1.5rem;">Previsão de inadimplência (PD - Probability of Default) em contratos imobiliários e auto, analisando aging de parcelas.</p>
+                    <span style="font-size: 0.85rem; color: #555; font-style: italic;"><i class="fas fa-tools"></i> Em desenvolvimento</span>
+                </div>
+                <div class="card glass task-card">
+                    <span style="font-size: 0.75rem; color: var(--text-muted); text-transform: uppercase; letter-spacing: 1px;">Machine Learning</span>
+                    <h4 style="margin: 0.5rem 0 1rem; color: var(--text-main);">Detecção de Fraudes</h4>
+                    <p style="color: var(--text-muted); font-size: 0.9rem; margin-bottom: 1.5rem;">Implementação de algoritmos de detecção de anomalias (Isolation Forest) no fluxo de transações de cartão de crédito.</p>
+                    <span style="font-size: 0.85rem; color: #555; font-style: italic;"><i class="fas fa-tools"></i> Em planejamento</span>
+                </div>
+                <div class="card glass task-card">
+                    <span style="font-size: 0.75rem; color: var(--text-muted); text-transform: uppercase; letter-spacing: 1px;">Unsupervised ML</span>
+                    <h4 style="margin: 0.5rem 0 1rem; color: var(--text-main);">Clusterização de Clientes</h4>
+                    <p style="color: var(--text-muted); font-size: 0.9rem; margin-bottom: 1.5rem;">Agrupamento comportamental baseado em consumo (K-Means/GMM) para descobrir personas transacionais não óbvias.</p>
+                    <span style="font-size: 0.85rem; color: #555; font-style: italic;"><i class="fas fa-tools"></i> Em planejamento</span>
+                </div>
+                <div class="card glass task-card">
+                    <span style="font-size: 0.75rem; color: var(--text-muted); text-transform: uppercase; letter-spacing: 1px;">Customer Lifecycle</span>
+                    <h4 style="margin: 0.5rem 0 1rem; color: var(--text-main);">Análise de Churn e LTV</h4>
+                    <p style="color: var(--text-muted); font-size: 0.9rem; margin-bottom: 1.5rem;">Previsão de cancelamento de contas e cálculo do Customer Lifetime Value utilizando modelagem de sobrevida (Survival Analysis).</p>
+                    <span style="font-size: 0.85rem; color: #555; font-style: italic;"><i class="fas fa-tools"></i> Em planejamento</span>
+                </div>
+                <div class="card glass task-card">
+                    <span style="font-size: 0.75rem; color: var(--text-muted); text-transform: uppercase; letter-spacing: 1px;">Marketing Data</span>
+                    <h4 style="margin: 0.5rem 0 1rem; color: var(--text-main);">Avaliação de Campanhas (ROI/ROAS)</h4>
+                    <p style="color: var(--text-muted); font-size: 0.9rem; margin-bottom: 1.5rem;">Mapeamento financeiro dos canais de aquisição para calcular o retorno sobre o investimento em mídia digital.</p>
+                    <span style="font-size: 0.85rem; color: #555; font-style: italic;"><i class="fas fa-tools"></i> Em planejamento</span>
+                </div>
+                <div class="card glass task-card">
+                    <span style="font-size: 0.75rem; color: var(--text-muted); text-transform: uppercase; letter-spacing: 1px;">Causal Inference</span>
+                    <h4 style="margin: 0.5rem 0 1rem; color: var(--text-main);">Multi-Touch Attribution (MTA)</h4>
+                    <p style="color: var(--text-muted); font-size: 0.9rem; margin-bottom: 1.5rem;">Uso do rastreamento multi-click (logs de telemetria e device_id) para modelagem avançada de atribuição algorítmica.</p>
+                    <span style="font-size: 0.85rem; color: #555; font-style: italic;"><i class="fas fa-tools"></i> Em planejamento</span>
+                </div>
+            </div>
+        </div>
+
+        <div class="card glass project-master-card" onclick="toggleTasks('tasks-exo', 'icon-exo')" style="cursor: pointer; border: 1px solid var(--accent); transition: all 0.3s ease; margin-top: 1rem;">
+            <div style="display: flex; justify-content: space-between; align-items: flex-start;">
+                <div>
+                    <span class="tag" style="color:var(--accent); font-size:0.8rem; text-transform:uppercase; font-weight: bold;">Data Engineering & APIs</span>
+                    <h3 style="margin: 1rem 0; font-size: 1.8rem; font-family: 'Space Grotesk';">Macroeconomic & Exogenous Pipeline</h3>
+                    <p style="color: var(--text-muted); max-width: 800px;">Desenvolvimento de um pipeline automatizado para extração, tratamento e armazenamento de dados macroeconômicos (Selic, IPCA, IBC-Br), calendário de feriados e tendências de mercado via APIs públicas. Base externa fundamental para isolar sazonalidades em modelos de Inferência Causal e Risco.</p>
+                </div>
+                <div style="color: var(--accent); font-size: 2rem;">
+                    <i id="icon-exo" class="fas fa-chevron-down"></i>
+                </div>
+            </div>
+            <p style="margin-top: 1rem; font-size: 0.85rem; color: var(--accent);">Clique para expandir o Projeto</p>
+        </div>
+
+        <div id="tasks-exo" style="display: none; margin-top: 3rem;">
+            <div class="grid" style="grid-template-columns: 1fr;">
+                <div class="card glass task-card" style="padding: 2rem;">
+                    <span style="font-size: 0.75rem; color: var(--accent); text-transform: uppercase; letter-spacing: 1px;">End-to-End ETL</span>
+                    <h4 style="margin: 0.5rem 0 1rem; color: var(--text-main); font-size: 1.4rem;">Pipeline Automatizado de Ingestão Exógena</h4>
+                    <p style="color: var(--text-muted); font-size: 1rem; margin-bottom: 1.5rem;">
+                        Processo abrangente de engenharia de dados focado na captura de indicadores oficiais. O pipeline consulta as APIs do Banco Central (SGS e Olinda) para <strong>Selic, IPCA e PTAX</strong>, além de integrar o calendário de feriados nacionais via Brasil API. Os dados são transformados e armazenados no schema <code>exogenas</code> para servir como base de suporte em modelos estatísticos e análises de incrementabilidade de marketing (MMM).
+                    </p>
+                    <div style="display: flex; gap: 1.5rem; align-items: center; border-top: 1px solid var(--glass-border); padding-top: 1.5rem;">
+                        <button class="btn open-modal-btn" data-modal="modal-exo" style="padding: 8px 15px; font-size: 0.85rem;" onclick="document.getElementById('modal-exo').style.display='flex'">Detalhes Técnicos</button>
+                        <a href="https://github.com/calebsaldanha/exogenous-data-pipeline" target="_blank" style="font-size: 0.95rem; color: var(--text-muted); text-decoration: none;"><i class="fab fa-github"></i> Ver Repositório Público</a>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+    </div>
+</section>

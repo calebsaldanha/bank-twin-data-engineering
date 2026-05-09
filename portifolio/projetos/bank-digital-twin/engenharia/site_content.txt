@@ -1,0 +1,10 @@
+Titulo: Bank Digital Twin - Simulacao de Dados em Larga Escala
+
+Resumo:
+Construcao de um ecossistema de dados sinteticos para um banco digital, simulando jornadas completas de clientes com foco em Marketing Attribution e Credit Scoring.
+
+Competencias:
+- Engenharia de Dados (Python/PostgreSQL)
+- Modelagem de Dados Relacional
+- Simulacao de Eventos de Marketing (Multi-Click)
+- Tratamento de Big Data (+1M registros)

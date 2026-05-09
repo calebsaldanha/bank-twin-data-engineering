@@ -1,0 +1,51 @@
+<section id="catalog">
+    <div class="container">
+        <h2 class="section-title">Governança e Catálogo</h2>
+        <div class="catalog-layout glass" style="display: grid; grid-template-columns: 320px 1fr; gap: 2rem; padding: 2rem;">
+            <aside>
+                <div id="catalog-content" style="display: block;">
+                    
+                    <details open style="margin-bottom: 20px;">
+                        <summary style="font-size: 1rem; color: var(--accent); border-bottom: 1px solid var(--glass-border); padding-bottom: 5px; margin-bottom: 15px; cursor: pointer; font-weight: bold; list-style: none;">
+                            <i class="fas fa-database" style="margin-right: 8px;"></i> Bank Digital Twin <i class="fas fa-chevron-down" style="float: right; font-size: 0.8rem; margin-top: 5px;"></i>
+                        </summary>
+                        <ul style="list-style: none; margin-bottom: 15px; padding-left: 10px;">
+                            <li class="table-item" onclick="loadTable('campanhas_marketing')">campanhas_marketing</li>
+                            <li class="table-item" onclick="loadTable('clientes')">clientes</li>
+                            <li class="table-item" onclick="loadTable('sessoes_dispositivos')">sessoes_dispositivos</li>
+                            <li class="table-item" onclick="loadTable('eventos_app')">eventos_app</li>
+                            <li class="table-item" onclick="loadTable('contas')">contas</li>
+                            <li class="table-item" onclick="loadTable('cartoes')">cartoes</li>
+                            <li class="table-item" onclick="loadTable('transacoes_cartao')">transacoes_cartao</li>
+                            <li class="table-item" onclick="loadTable('investimentos_posicao')">investimentos_posicao</li>
+                            <li class="table-item" onclick="loadTable('contratos_credito')">contratos_credito</li>
+                            <li class="table-item" onclick="loadTable('parcelas_credito')">parcelas_credito</li>
+                        </ul>
+                    </details>
+                    
+                    <details style="margin-bottom: 20px;">
+                        <summary style="font-size: 1rem; color: var(--accent); border-bottom: 1px solid var(--glass-border); padding-bottom: 5px; margin-bottom: 15px; cursor: pointer; font-weight: bold; list-style: none;">
+                            <i class="fas fa-chart-line" style="margin-right: 8px;"></i> Macroeconomic Pipeline <i class="fas fa-chevron-down" style="float: right; font-size: 0.8rem; margin-top: 5px;"></i>
+                        </summary>
+                        <ul style="list-style: none; padding-left: 10px;">
+                            <li class="table-item" onclick="loadTable('macroeconomia')">exogenas.macroeconomia</li>
+                            <li class="table-item" onclick="loadTable('feriados')">exogenas.feriados</li>
+                            <li class="table-item" onclick="loadTable('google_trends')">exogenas.google_trends</li>
+                        </ul>
+                    </details>
+                    
+                </div>
+            </aside>
+            <main>
+                <h3 id="table-title" style="color: var(--accent); margin-bottom: 0.5rem;">public.clientes</h3>
+                <p id="table-desc" style="color: var(--text-muted); margin-bottom: 1.5rem;">Cadastro mestre de clientes.</p>
+                <table style="width: 100%; border-collapse: collapse;">
+                    <thead style="text-align: left; border-bottom: 1px solid var(--glass-border);">
+                        <tr><th style="padding:10px;">COLUNA</th><th style="padding:10px;">TIPO</th><th style="padding:10px;">DESCRIÇÃO</th></tr>
+                    </thead>
+                    <tbody id="table-body"></tbody>
+                </table>
+            </main>
+        </div>
+    </div>
+</section>
